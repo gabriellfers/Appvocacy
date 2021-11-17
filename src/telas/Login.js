@@ -14,6 +14,7 @@ import {
 getAuth, 
 signInWithEmailAndPassword,
 signOut,
+sendPasswordResetEmail,
 onAuthStateChanged
 } from "firebase/auth";
 require ("./../../firebaseConfig.js")
@@ -27,6 +28,22 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [ocultarSenha, setOcultarSenha] = useState (true);
+
+  function redefinirSenha(){
+  const auth = getAuth();
+  sendPasswordResetEmail(auth, email)
+  .then(() => {
+    alert("Email enviado!")
+    // ..
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log("Email não enviado "+errorCode+ " "+errorMessage)
+    // ..
+  });
+
+  }
 
   function logarFirebase(){
     const auth = getAuth();
@@ -121,7 +138,7 @@ export default function Login({navigation}) {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.btnCadastrar}>
-        <Text style={styles.textoCad}>Esqueci minha senha</Text>
+        <Text style={styles.textoCad} onPress={()=>{redefinirSenha()}}>Esqueci minha senha</Text>
       </TouchableOpacity>
 
      </View>
