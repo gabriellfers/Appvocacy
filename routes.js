@@ -14,6 +14,7 @@ export default function Routes(){
     return(
         <Tab.Navigator
         screenOptions={{
+          headerShown: false,
           tabBarLabelStyle: {
             color: "#fff"
           },

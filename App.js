@@ -22,30 +22,37 @@ export default function App({  }){
         <Stack.Screen 
         name="Cadastro"
         component={Cadastro}
+        options={{title: "Appvocacy", headerLeft: null, headerShown: true}}
         />
         <Stack.Screen 
         name="Main"
         component={Main}
+        options={{title: "Appvocacy", headerLeft: null, headerShown: true}}
         />
         <Stack.Screen 
         name="Login"
         component={Login}
+        options={{title: "Appvocacy", headerLeft: null, headerShown: true}}
         />
         <Stack.Screen 
         name="CadastroCliente"
         component={CadastroCliente}
+        options={{title: "Appvocacy" ,headerLeft: null, headerShown: true}}
         />
         <Stack.Screen 
         name="Perfil"
         component={Perfil}
+        options={{title: "Appvocacy", headerLeft: null, headerShown: true}}
         />
         <Stack.Screen 
         name="Buscar"
         component={Buscar}
+        options={{title: "Appvocacy", headerLeft: null, headerShown: true}}
         />
         <Stack.Screen 
         name="Chats"
         component={Chats}
+        options={{title: "Appvocacy", headerLeft: null, headerShown: true}}
         />
         
        </Stack.Navigator>
