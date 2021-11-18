@@ -16,6 +16,10 @@ import {
     onAuthStateChanged
 } from "firebase/auth";
 
+import { 
+  doc, setDoc, getFirestore
+} from "firebase/firestore";
+
 require ("./../../firebaseConfig.js")
 
 
@@ -24,27 +28,35 @@ import logo from './../assets/logo.png';
 
 export default function CadastroCliente({navigation}) {
     
+    const db = getFirestore();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [vCPF, setCPF] = useState('');
     const [vDataNascimento, setDataNascimento] = useState('');
     const [vNome, setNome] = useState('');
-    const [vRG, setRG] = useState('');
+    const [vTelefone, setTelefone] = useState('');
     const [ocultarSenha, setOcultarSenha] = useState (true);
 
     function cadastrarFirebase(){
         const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, senha).then(cred => {
+        createUserWithEmailAndPassword(auth, email, senha, vCPF, vDataNascimento, vNome, vTelefone).then(cred => {
                 // Signed in
                 const user = cred.user;
                 // ...
-                console.log(user)
 
+                setDoc(doc(db, "info-user", user.uid), {
+                  CPF: vCPF,
+                  DataNascimnto: vDataNascimento,
+                  Nome: vNome,
+                  Telefone: vTelefone
+                });
+
+                console.log("Criado com sucesso! UID: " + user.uid)
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log("Ocorreu um erro na criação da conta (AUTH)", errorCode, errorMessage)
+            console.log("Ocorreu um erro na criação da conta", errorCode, errorMessage)
             // ..
           })
         };
@@ -114,8 +126,8 @@ export default function CadastroCliente({navigation}) {
     <TextInput 
         style={styles.inputs}
         autoCorrect = {false}
-        placeholder = " RG"
-        onChangeText={ RG => setRG(RG) }  
+        placeholder = " Telefone"
+        onChangeText={ Telefone => setTelefone(Telefone) }  
       />
 
     <TextInput 
