@@ -39,6 +39,7 @@ export default function Login({navigation}) {
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    alert("Digite seu email!")
     console.log("Email não enviado "+errorCode+ " "+errorMessage)
     // ..
   });
@@ -90,15 +91,6 @@ export default function Login({navigation}) {
        source={logo} 
        />
      </View>
-    
-    <View>
-    <Text> </Text>
-    <Text> </Text>
-    <Text style={styles.titulo}>Appvocacy</Text>
-    <Text> </Text>
-    <Text> </Text>
-    <Text> </Text>
-    </View>
 
      <View style={styles.container}>
      
