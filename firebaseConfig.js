@@ -9,6 +9,7 @@ import { initializeApp } from "firebase/app";
 const firebaseConfig = {
   apiKey: "AIzaSyBtksjb6Hh9h5ib9mEKrYm_uQXxgVKbx0c",
   authDomain: "tcc-bd-1.firebaseapp.com",
+  databaseURL: "https://tcc-bd-1-default-rtdb.firebaseio.com",
   projectId: "tcc-bd-1",
   storageBucket: "tcc-bd-1.appspot.com",
   messagingSenderId: "857233936113",
@@ -18,3 +19,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
