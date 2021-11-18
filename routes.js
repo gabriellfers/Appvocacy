@@ -14,17 +14,19 @@ export default function Routes(){
     return(
         <Tab.Navigator
         screenOptions={{
+          tabBarLabelStyle: {
+            color: "#fff"
+          },
             tabBarStyle:{
                 backgroundColor: '#D49D3D',
                 borderTopColor: 'transparent',
                 
             },
-            activeTintColor: '#FFFFFF',
+           tabBarActiveBackgroundColor: '#bf8d36',
             tabStyle: {
                 tabStyle:{
                     paddingBottom:5,
-                    paddingTop:5,
-                    borderRightColor: '#000000' 
+                    paddingTop:5, 
                 }
             }
         }}
