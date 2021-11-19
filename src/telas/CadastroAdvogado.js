@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
 import { 
-TextInputMask 
-} from 'react-native-masked-text'
+  TextInputMask 
+  } from 'react-native-masked-text'
 
 import {
 View, 
@@ -24,57 +24,59 @@ import {
   doc, setDoc, getFirestore
 } from "firebase/firestore";
 
-require ("./../../firebaseConfig.js")
+require ("../../firebaseConfig.js")
 
 
 import { Ionicons } from '@expo/vector-icons';
 import logo from './../assets/logo.png';
+import { setEnabled } from 'react-native/Libraries/Performance/Systrace';
 
-export default function CadastroCliente({navigation}) {
+export default function CadastroAdvogado({navigation}) {
     
     const db = getFirestore();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [vCPF, setCPF] = useState('');
-    const [vDataNascimento, setDataNascimento] = useState('');
+    const [vOAB, setOAB] = useState('');
     const [vNome, setNome] = useState('');
+    const [vEndereco, setEndereco] = useState('');
     const [vTelefone, setTelefone] = useState('');
     const [ocultarSenha, setOcultarSenha] = useState (true);
-
-    function cadastrarFirebase(){
-        const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, senha, vCPF, vDataNascimento, vNome, vTelefone).then(cred => {
-                // Signed in
-                const user = cred.user;
-                // ...
-
-                setDoc(doc(db, "info-user", user.uid), {
-                  CPF: vCPF,
-                  DataNascimnto: vDataNascimento,
-                  Nome: vNome,
-                  Telefone: vTelefone
-                });
-
-                console.log("Criado com sucesso! UID: " + user.uid)
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log("Ocorreu um erro na criação da conta", errorCode, errorMessage)
-            // ..
-          })
-        };
     
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-       if (user) {
-         console.log("Bem vindo: " +user.uid)
-         const uid = user.uid;
-         navigation.navigate("Main")
-       } else {
-         console.log("Não está logado")
-       }
-       });
+    function cadastrarFirebase(){
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, senha, vOAB, vNome, vEndereco, vTelefone).then(cred => {
+              // Signed in
+              const user = cred.user;
+              // ...
+
+              setDoc(doc(db, "info-advogado", user.uid), {
+                Endereco: vEndereco,
+                OAB: vOAB,
+                Nome: vNome,
+                Telefone: vTelefone
+              });
+
+              console.log("Criado com sucesso! UID: " + user.uid)
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("Ocorreu um erro na criação da conta", errorCode, errorMessage)
+          // ..
+        })
+      };
+  
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+     if (user) {
+       console.log("Bem vindo: " +user.uid)
+       const uid = user.uid;
+       navigation.navigate("Main")
+     } else {
+       console.log("Não está logado")
+     }
+     });
+
     return(
 
     <ScrollView style={styles.fundo}>
@@ -120,15 +122,18 @@ export default function CadastroCliente({navigation}) {
         onChangeText={ nome => setNome(nome) }  
       />
 
-    <TextInputMask 
-       style={styles.inputs}
-       placeholder=" CPF"
-       type={'cpf'}
-       value={vCPF}
-       onChangeText={ cpf => setCPF(cpf)}
-        />
-
       <TextInputMask 
+       style={styles.inputs}
+       type={'custom'}
+       placeholder=" Numero OAB"
+       options={{
+         mask: ' 999999'
+       }}
+       value={vOAB}
+       onChangeText={ oab => setOAB(oab)}
+       />
+
+    <TextInputMask 
        style={styles.inputs}
        type={'cel-phone'}
        placeholder=" Celular"
@@ -141,15 +146,11 @@ export default function CadastroCliente({navigation}) {
        onChangeText={ telefone => setTelefone(telefone)}
        />
 
-      <TextInputMask 
-       style={styles.inputs}
-       type={'datetime'}
-       placeholder=" Data de Nascimento"
-       options={{
-         format: 'DD/MM/YYYY'
-       }}
-       value={vDataNascimento}
-        onChangeText={ nascimento => setDataNascimento(nascimento) }  
+    <TextInput 
+        style={styles.inputs}
+        autoCorrect = {false}
+        placeholder = " Endereco "
+        onChangeText={ endereco => setEndereco(endereco) }  
       />
      </View>
      </View>    

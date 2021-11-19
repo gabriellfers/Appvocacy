@@ -125,10 +125,6 @@ export default function Login({navigation}) {
         <Text style={styles.textoLogin}>Fazer Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
-        <Text style={styles.textoLogin}>Sair</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity style={styles.btnCadastrar}>
         <Text style={styles.textoCad} onPress={()=>{redefinirSenha()}}>Esqueci minha senha</Text>
       </TouchableOpacity>
@@ -181,16 +177,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 7,
     },
-
-    btnLogout:{
-      backgroundColor: '#4a0000',
-      width: '75%',
-      height: 40,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 7,
-      marginTop: 15
-      },
 
   textoLogin:{
     color: '#FFFFFF',
