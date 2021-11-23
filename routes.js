@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import Main from './src/telas/Main';
 import Perfil from './src/telas/Perfil';
 import Buscar from './src/telas/Busca';
@@ -19,11 +18,11 @@ export default function Routes(){
             color: "#fff"
           },
             tabBarStyle:{
-                backgroundColor: '#D49D3D',
+                backgroundColor: '#BBC7F0',
                 borderTopColor: 'transparent',
-                
+
             },
-           tabBarActiveBackgroundColor: '#bf8d36',
+           tabBarActiveBackgroundColor: '#B1BDE3',
             tabStyle: {
                 tabStyle:{
                     paddingBottom:5,
@@ -33,20 +32,11 @@ export default function Routes(){
         }}
         >
        <Tab.Screen
-        name="Main"
-        component={Main}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="home" color="#FFFFFF" size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Buscar"
+        name="Home"
         component={Buscar}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Feather name="search" color="#FFFFFF" size={size} />
+            <Feather name="home" color="#FFFFFF" size={size} />
           ),
         }}
       />
@@ -68,7 +58,6 @@ export default function Routes(){
           ),
         }}
       />
-
     </Tab.Navigator>
     );
 

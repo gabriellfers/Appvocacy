@@ -4,6 +4,8 @@ import {
   TextInputMask 
   } from 'react-native-masked-text'
 
+import DropDownPicker from 'react-native-dropdown-picker';
+
 import {
 View, 
 StyleSheet, 
@@ -15,13 +17,15 @@ ScrollView
 } from 'react-native';
 
 import { 
-    getAuth,
-    createUserWithEmailAndPassword,
-    onAuthStateChanged
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged
 } from "firebase/auth";
 
 import { 
-  doc, setDoc, getFirestore
+  doc, 
+  setDoc, 
+  getFirestore
 } from "firebase/firestore";
 
 require ("../../firebaseConfig.js")
@@ -41,10 +45,26 @@ export default function CadastroAdvogado({navigation}) {
     const [vEndereco, setEndereco] = useState('');
     const [vTelefone, setTelefone] = useState('');
     const [ocultarSenha, setOcultarSenha] = useState (true);
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+    {label: ' Criminal', value: 'Criminal'},
+    {label: ' Penal', value: 'Penal'},
+    {label: ' Tributário', value: 'Tributário'},
+    {label: ' Trabalhista', value: 'Trabalhista'},
+    {label: ' Contratual', value: 'Contratual'},
+    {label: ' Ambiental', value: 'Ambiental'},
+    {label: ' Empresarial', value: 'Empresarial'},
+    {label: ' Consumidor', value: 'Consumidor'},
+    {label: ' Estado', value: 'Estado'},
+    {label: ' Eleitoral', value: 'Eleitoral'},
+    {label: ' Tecnologia da Informação', value: 'Tecnologia da Informação'},
+    {label: ' Propriedade Intelectual', value: 'Propriedade Intelectual'}
+  ]);
     
     function cadastrarFirebase(){
       const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, senha, vOAB, vNome, vEndereco, vTelefone).then(cred => {
+      createUserWithEmailAndPassword(auth, email, senha, vOAB, vNome, vEndereco, vTelefone, value).then(cred => {
               // Signed in
               const user = cred.user;
               // ...
@@ -53,7 +73,8 @@ export default function CadastroAdvogado({navigation}) {
                 Endereco: vEndereco,
                 OAB: vOAB,
                 Nome: vNome,
-                Telefone: vTelefone
+                Telefone: vTelefone,
+                Tipo: value
               });
 
               console.log("Criado com sucesso! UID: " + user.uid)
@@ -71,7 +92,7 @@ export default function CadastroAdvogado({navigation}) {
      if (user) {
        console.log("Bem vindo: " +user.uid)
        const uid = user.uid;
-       navigation.navigate("Main")
+       navigation.navigate("ChatsAdvogado")
      } else {
        console.log("Não está logado")
      }
@@ -152,6 +173,21 @@ export default function CadastroAdvogado({navigation}) {
         placeholder = " Endereco "
         onChangeText={ endereco => setEndereco(endereco) }  
       />
+
+    <DropDownPicker
+      style={styles.inputipo}
+      textStyle={{
+        fontSize: 17
+      }}
+      placeholder=" Selecione seu campo"
+      maxHeight={60}
+      open={open}
+      value={value}
+      items={items}
+      setOpen={setOpen}
+      setValue={setValue}
+      setItems={setItems}
+    />
      </View>
      </View>    
      
@@ -159,6 +195,10 @@ export default function CadastroAdvogado({navigation}) {
      <TouchableOpacity style={styles.btnCadastrar} onPress={()=>cadastrarFirebase()}>
         <Text style={styles.textoCadastrar}>Cadastrar</Text>
       </TouchableOpacity>    
+
+      <TouchableOpacity style={styles.btnLogin}>
+        <Text style={styles.textoLogin} onPress={()=>{navigation.navigate('LoginAdvogado')}}>Já possuo cadastro</Text>
+      </TouchableOpacity>
      </View>
     </View>
     </ScrollView>
@@ -195,6 +235,18 @@ export default function CadastroAdvogado({navigation}) {
         padding: 10
     },
 
+    inputipo:{
+      backgroundColor: '#FFF',
+      width: 300,
+      marginBottom: 35,
+      color:'#000000',
+      fontSize: 17,
+      borderRadius: 7,
+      paddingRight: 0,
+      paddingLeft: 0,
+      padding: 10
+  },
+
     inputsenha:{
         backgroundColor: '#FFF',
         width: 260,
@@ -204,9 +256,6 @@ export default function CadastroAdvogado({navigation}) {
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
         borderRadius: 7,
-        paddingRight: 0,
-        paddingLeft: 0,
-        padding: 10
     },
 
     areaInputSenha:{
@@ -241,7 +290,23 @@ export default function CadastroAdvogado({navigation}) {
         borderBottomLeftRadius: 0,
         borderRadius: 7,
     
-      }
+      },
+
+      btnLogin:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 7,
+        marginBottom: 10,
+        marginTop: 5,
+      },
+  
+      textoLogin:{
+        color: '#D49D3D',
+        textDecorationLine: 'underline',
+        fontWeight: 'bold',
+        fontSize: 16,
+        fontStyle: 'italic'
+      },
     
 })
 

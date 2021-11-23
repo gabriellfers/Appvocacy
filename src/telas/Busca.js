@@ -15,7 +15,7 @@ import {
   Searchbar 
 } from 'react-native-paper';
 
-const Buscar = () => {
+const Buscar = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = query => setSearchQuery(query);
 
@@ -23,66 +23,75 @@ const Buscar = () => {
     <ScrollView>
     <View style={styles.container}>
      <Searchbar style={{marginLeft: 10, marginRight: 10, marginTop: 10}}
-      placeholder=""
+      placeholder="amo taylor swift"
       onChangeText={onChangeSearch}
       value={searchQuery}
     />
     <View style={styles.container2}>
       <View style={{ flex: 0.5}}>
       {/* Primeira Coluna */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <Image style={styles.imagens}
+       source={require('./../assets/advogado1.jpg')}
+      /> 
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
-      />
+       />
       </TouchableOpacity>
-
       </View>
       <View style={{ flex: 0.5}}>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
       <Image style={styles.imagens}
        source={require('./../assets/advogado1.jpg')}
       />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <Image style={styles.imagens}
+       source={require('./../assets/advogado1.jpg')}
+       />
       </TouchableOpacity>
       </View>
       </View>
@@ -95,6 +104,7 @@ const styles = StyleSheet.create({
   container2: {
     flex: 0.5,
     flexDirection: "row",
+    marginBottom: 5,
   },
   container: {
     flex: 0.5,
@@ -104,7 +114,7 @@ const styles = StyleSheet.create({
     height: 100,
     marginTop: 15,
     marginLeft: 11,
-    borderRadius: 10,
+    borderRadius: 5,
     flexDirection: "row",
   },
 });

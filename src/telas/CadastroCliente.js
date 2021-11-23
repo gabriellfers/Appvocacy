@@ -70,7 +70,7 @@ export default function CadastroCliente({navigation}) {
        if (user) {
          console.log("Bem vindo: " +user.uid)
          const uid = user.uid;
-         navigation.navigate("Main")
+         navigation.navigate("Buscar")
        } else {
          console.log("Não está logado")
        }
@@ -157,7 +157,11 @@ export default function CadastroCliente({navigation}) {
      <View>
      <TouchableOpacity style={styles.btnCadastrar} onPress={()=>cadastrarFirebase()}>
         <Text style={styles.textoCadastrar}>Cadastrar</Text>
-      </TouchableOpacity>    
+      </TouchableOpacity> 
+
+      <TouchableOpacity style={styles.btnLogin}>
+        <Text style={styles.textoLogin} onPress={()=>{navigation.navigate('LoginCliente')}}>Já possuo cadastro</Text>
+      </TouchableOpacity>   
      </View>
     </View>
     </ScrollView>
@@ -230,6 +234,22 @@ export default function CadastroCliente({navigation}) {
         fontSize: 17
     },
 
+    btnLogin:{
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 7,
+      marginBottom: 10,
+      marginTop: 5,
+    },
+
+    textoLogin:{
+      color: '#D49D3D',
+      textDecorationLine: 'underline',
+      fontWeight: 'bold',
+      fontSize: 16,
+      fontStyle: 'italic'
+    },
+
     icon:{
         width: 40,
         height: 48,
@@ -240,7 +260,7 @@ export default function CadastroCliente({navigation}) {
         borderBottomLeftRadius: 0,
         borderRadius: 7,
     
-      }
+      },
     
 })
 

@@ -32,10 +32,6 @@ export default function Cadastro({navigation}) {
         <Text style={styles.textoButton} >Cadastrar Advogado</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btnLogin}>
-        <Text style={styles.textoLogin} onPress={()=>{navigation.navigate('Login')}}>Já possuo cadastro</Text>
-      </TouchableOpacity>
-
       </View>
       </View>
     </ScrollView>

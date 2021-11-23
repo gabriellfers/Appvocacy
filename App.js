@@ -6,10 +6,14 @@ import Cadastro from './src/telas/CadastroEscolha';
 import CadastroCliente from './src/telas/CadastroCliente';
 import CadastroAdvogado from './src/telas/CadastroAdvogado';
 import Main from './src/telas/rotas';
-import Login from './src/telas/Login';
+import LoginCliente from './src/telas/LoginCliente';
+import LoginAdvogado from './src/telas/LoginAdvogado';
 import Perfil from './src/telas/Perfil';
+import PerfilAdvogado from './src/telas/PerfilAdvogado';
 import Buscar from './src/telas/Busca';
 import Chats from './src/telas/Chats';
+import ChatsAdvogado from './src/telas/ChatsAdvogado';
+import ListaBusca from './src/telas/ListaBusca';
 
 
 const Stack = createStackNavigator();
@@ -31,8 +35,13 @@ export default function App({  }){
         options={{title: "Appvocacy", headerLeft: false, headerShown: true}}
         />
         <Stack.Screen 
-        name="Login"
-        component={Login}
+        name="LoginCliente"
+        component={LoginCliente}
+        options={{title: "Appvocacy", headerShown: true}}
+        />
+        <Stack.Screen 
+        name="LoginAdvogado"
+        component={LoginAdvogado}
         options={{title: "Appvocacy", headerShown: true}}
         />
         <Stack.Screen 
@@ -51,6 +60,11 @@ export default function App({  }){
         options={{title: "Appvocacy", headerShown: true}}
         />
         <Stack.Screen 
+        name="PerfilAdvogado"
+        component={PerfilAdvogado}
+        options={{title: "Appvocacy", headerShown: true}}
+        />
+        <Stack.Screen 
         name="Buscar"
         component={Buscar}
         options={{title: "Appvocacy", headerShown: true}}
@@ -60,7 +74,17 @@ export default function App({  }){
         component={Chats}
         options={{title: "Appvocacy", headerShown: true}}
         />
-        
+        <Stack.Screen 
+        name="ChatsAdvogado"
+        component={ChatsAdvogado}
+        options={{title: "Appvocacy", headerShown: true}}
+        />
+         <Stack.Screen 
+        name="ListaBusca"
+        component={ListaBusca}
+        options={{title: "Appvocacy",  headerShown: true}}
+        />
+
        </Stack.Navigator>
     </NavigationContainer>
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet} from 'react-native';
 
-const Main = ()=> {
+export default function Chats() {
   return (
     <View style = {styles.container}>
       <Text style = {styles.text}>
-        TELA CHATS
+        TELA CHATS ADVOGADOS
       </Text>
     </View>
   );
@@ -23,5 +23,3 @@ const styles = StyleSheet.create({
     }
 
 })
-
-export default Main;
