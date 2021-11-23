@@ -10,7 +10,7 @@ import LoginCliente from './src/telas/LoginCliente';
 import LoginAdvogado from './src/telas/LoginAdvogado';
 import Perfil from './src/telas/Perfil';
 import PerfilAdvogado from './src/telas/PerfilAdvogado';
-import Buscar from './src/telas/Busca';
+import Home from './src/telas/Busca';
 import Chats from './src/telas/Chats';
 import ChatsAdvogado from './src/telas/ChatsAdvogado';
 import ListaBusca from './src/telas/ListaBusca';
@@ -65,8 +65,8 @@ export default function App({  }){
         options={{title: "Appvocacy", headerShown: true}}
         />
         <Stack.Screen 
-        name="Buscar"
-        component={Buscar}
+        name="Home"
+        component={Home}
         options={{title: "Appvocacy", headerShown: true}}
         />
         <Stack.Screen 
@@ -79,10 +79,10 @@ export default function App({  }){
         component={ChatsAdvogado}
         options={{title: "Appvocacy", headerShown: true}}
         />
-         <Stack.Screen 
+        <Stack.Screen 
         name="ListaBusca"
         component={ListaBusca}
-        options={{title: "Appvocacy",  headerShown: true}}
+        options={{title: "Appvocacy", headerShown: true}}
         />
 
        </Stack.Navigator>

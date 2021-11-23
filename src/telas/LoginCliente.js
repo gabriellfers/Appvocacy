@@ -64,7 +64,7 @@ export default function Login({navigation}) {
   if (user) {
     console.log("Bem vindo: " +user.uid)
     const uid = user.uid;
-    navigation.navigate("Buscar")
+    navigation.navigate("Main")
   } else {
     console.log("Não está logado")
   }

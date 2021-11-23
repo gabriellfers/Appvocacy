@@ -1,13 +1,17 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Main from './src/telas/Main';
+
+import Home from './src/telas/Main';
 import Perfil from './src/telas/Perfil';
+import PerfilAdvogado from './src/telas/PerfilAdvogado';
 import Buscar from './src/telas/Busca';
 import Chats from './src/telas/Chats';
+import ChatsAdvogado from './src/telas/ChatsAdvogado';
 
 import {Feather} from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
+const Tab2 = createBottomTabNavigator();
 
 export default function Routes(){
     return(
@@ -18,11 +22,11 @@ export default function Routes(){
             color: "#fff"
           },
             tabBarStyle:{
-                backgroundColor: '#BBC7F0',
+                backgroundColor: '#D49D3D',
                 borderTopColor: 'transparent',
-
+                
             },
-           tabBarActiveBackgroundColor: '#B1BDE3',
+           tabBarActiveBackgroundColor: '#bf8d36',
             tabStyle: {
                 tabStyle:{
                     paddingBottom:5,
@@ -31,7 +35,7 @@ export default function Routes(){
             }
         }}
         >
-       <Tab.Screen
+      <Tab.Screen
         name="Home"
         component={Buscar}
         options={{
@@ -54,11 +58,18 @@ export default function Routes(){
         component={Perfil}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Feather name="user" color="#FFFFFF" size={size} />
+            <Feather name="users" color="#FFFFFF" size={size} />
           ),
         }}
       />
-    </Tab.Navigator>
-    );
 
+    </Tab.Navigator>
+
+
+
+      
+    );
 }
+
+      
+  
