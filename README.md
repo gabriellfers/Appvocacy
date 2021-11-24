@@ -1,3 +1,3 @@
 # Appvocacy
 
-![Appvocacy](https://imgur.com/yAVX7uP)
+![Appvocacy](https://i.imgur.com/yAVX7uP.png)
