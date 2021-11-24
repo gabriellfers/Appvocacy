@@ -13,6 +13,9 @@ import {Feather} from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 const Tab2 = createBottomTabNavigator();
 
+
+
+
 export default function Routes(){
     return(
         <Tab.Navigator

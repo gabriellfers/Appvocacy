@@ -22,12 +22,7 @@ const Buscar = ({navigation}) => {
 
   return (
     <ScrollView>
-    <View style={styles.container}>
-     <Searchbar style={{marginLeft: 10, marginRight: 10, marginTop: 10}}
-      placeholder="amo taylor swift"
-      onChangeText={onChangeSearch}
-      value={searchQuery}
-    />
+    
     <View style={styles.container2}>
       <View style={{ flex: 0.5}}>
       {/* Primeira Coluna */}
@@ -94,7 +89,6 @@ const Buscar = ({navigation}) => {
        source={require('./../assets/advogado1.jpg')}
        />
       </TouchableOpacity>
-      </View>
       </View>
       </View>
       </ScrollView>

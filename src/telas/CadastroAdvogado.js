@@ -37,6 +37,8 @@ import { setEnabled } from 'react-native/Libraries/Performance/Systrace';
 
 export default function CadastroAdvogado({navigation}) {
     
+    
+    DropDownPicker.setListMode("MODAL");
     const db = getFirestore();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -177,16 +179,73 @@ export default function CadastroAdvogado({navigation}) {
     <DropDownPicker
       style={styles.inputipo}
       textStyle={{
-        fontSize: 17
+        fontSize: 17,
+        color: "#888"
       }}
       placeholder=" Selecione seu campo"
-      maxHeight={60}
       open={open}
       value={value}
+      itemSeparator={true}
       items={items}
+     
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
+
+      listItemContainer={{
+        height: 40,
+        
+      }}
+      listItemLabelStyle={{
+        height: 20,
+    margin: 0,
+    marginLeft: 15,
+    marginRight: 5,
+    borderRadius: 5,
+    fontSize: 19,
+    padding: 5,
+    color: '#000',
+      }}
+      modalProps={{
+        animationType: "slide"
+      }}
+      selectedItemContainerStyle={{
+        backgroundColor: "#e6e6e6"
+      }}
+      selectedItemLabelStyle={{
+        fontWeight: "bold",
+        color: '#000'
+      }}
+      modalContainerStyle={{
+        marginLeft: 20,
+        marginRight: 20,
+        backgroundColor: "#FFFFFF",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      }}
+      modalContentContainerStyle={{
+    height: 60,
+    backgroundColor: '#fff',
+    margin: 20,
+    marginLeft: 15,
+    marginRight: 5,
+    borderRadius: 5,
+    fontSize: 19,
+    padding: 30,
+    color: '#000',
+      }}
+      itemSeparatorStyle={{
+        backgroundColor: "#c6c6c6"
+      }}
     />
      </View>
      </View>    
@@ -206,6 +265,7 @@ export default function CadastroAdvogado({navigation}) {
       }
 
     const styles = StyleSheet.create({
+      
     fundo:{
         flex: 1,
         backgroundColor: '#e6e6e6'
@@ -238,13 +298,12 @@ export default function CadastroAdvogado({navigation}) {
     inputipo:{
       backgroundColor: '#FFF',
       width: 300,
-      marginBottom: 35,
       color:'#000000',
       fontSize: 17,
       borderRadius: 7,
       paddingRight: 0,
       paddingLeft: 0,
-      padding: 10
+      padding: 5
   },
 
     inputsenha:{

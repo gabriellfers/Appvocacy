@@ -8,14 +8,16 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import ListItem from './../components/ListItem';
 
+import ListItem from './../components/ListItem';
+import { MaterialCommunityIcons, Feather} from '@expo/vector-icons';
 import results from './results';
 
 const ListaBusca = () => {
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState(results);
+  const [listar, setListar] = useState(0);
+  const [clicado, setClicado] = useState (false);
 
   useEffect(() => {
     if (searchText === '') {
@@ -31,15 +33,53 @@ const ListaBusca = () => {
   }, [searchText]);
 
   const handleOrderClick = () => {
-    let newList = [...results];
+    let newList = [...list];
 
-    newList.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+      
+    if(listar==0){
+      setList(newList.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0)))
+      setListar(1)
+      console.log("crescente")
+    }
+    else{
+      setList(newList.sort((a, b) => (a.name < b.name ? 1 : b.name < a.name ? -1 : 0)))
+      setListar(0)
+      console.log("decrescente")
+    }
+    //setList(newList);
 
-    setList(newList);
+    console.log(listar)
   };
 
   return (
+
     <SafeAreaView style={styles.container}>
+
+      <View style={styles.searchArea}>
+
+        <TextInput
+          style={styles.input}
+          placeholder= "Pesquise"
+          placeholderTextColor="#888"
+          value={searchText}
+          onChangeText={(t) => setSearchText(t)}
+        />
+
+        <TouchableOpacity style={StyleSheet.botao} onPress={()=>{
+          handleOrderClick()
+          setClicado(!clicado)
+        }
+          } style={styles.orderButton}>
+          
+          {clicado ?
+            <MaterialCommunityIcons name="order-alphabetical-ascending" size={40} color="#888"/>
+            :
+            <MaterialCommunityIcons name="order-alphabetical-descending" size={40} color="#888"/>
+          }
+
+        </TouchableOpacity>
+
+      </View>
 
       <FlatList
         data={list}
@@ -57,15 +97,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  botao:{
+    marginRight: 10
+  },
   input: {
+    borderColor: '#e6e6e6',
+    borderStyle: 'solid',
+    borderWidth: 1,
     flex: 1,
     height: 50,
-    backgroundColor: '#363636',
-    margin: 30,
+    backgroundColor: '#fff',
+    margin: 20,
+    marginLeft: 15,
+    marginRight: 5,
     borderRadius: 5,
     fontSize: 19,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 10,
+    paddingRight: 10,
     color: '#000',
   },
   searchArea: {
@@ -74,7 +122,7 @@ const styles = StyleSheet.create({
   },
   orderButton: {
     width: 32,
-    marginRight: 30,
+    marginRight: 20,
   },
   list: {
     flex: 1,

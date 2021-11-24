@@ -18,6 +18,7 @@ import {
   getFirestore,
   doc,
   getDoc,
+  setDoc
 } from "firebase/firestore";
 import { 
   getAuth,
@@ -37,17 +38,24 @@ import { TouchableHighlight } from "react-native";
 export default function Perfil({navigation}) {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalImagemVisible, setModalImagemVisible] = useState(false);
+
+  const [vCPF, setCPF] = useState();
+  const [vData, setData] = useState();
+  const [vNome, setNome] = useState();
+  const [vTel, setTelefone] = useState();
+  const [vImagem, setImagem] = useState();
 
   const [TextoNome, setTNome] = useState();
   const [TextoCPF, setTCPF] = useState();
   const [TextoData, setTData] = useState();
   const [TextoTel, setTTel] = useState();
-  const [Imagem, setTImagem] = useState();
+  const [TextoImagem, setTImagem] = useState();
   const [Idfirebase, setUID] = useState();
   var documento = 'info-user';
 
   class User {
-    constructor (Nome, CPF, DataNascimnto, Telefone ) {
+    constructor (Nome, CPF, DataNascimnto, Telefone, Imagem ) {
         this.Nome = Nome;
         this.CPF = CPF;
         this.DataNascimnto = DataNascimnto;
@@ -66,7 +74,7 @@ export default function Perfil({navigation}) {
     toStringTel() {
       return this.Telefone;
     }
-    toStringImg() {
+    toStringImagem() {
       return this.Imagem;
     }
 }
@@ -102,45 +110,59 @@ export default function Perfil({navigation}) {
 
   onAuthStateChanged(auth, (user) => {
  if (user) {
-   //console.log("Usuario logado: " +user.uid)
+   console.log("Usuario logado: " +user.uid)
    getDoc(doc(db, "info-user", user.uid).withConverter(userConverter)).then(docSnap => {
      setUID(user.uid)
     if (docSnap.exists()) {
-      //console.log("Document data:", docSnap.data());
+     // console.log("Document data:", docSnap.data());
       var data = docSnap.data()
 
       setTNome(data.toStringNome())
       setTCPF(data.toStringCPF())
       setTData(data.toStringData())
       setTTel(data.toStringTel())
-      setTImg(data.toStringImagem())
-
-      /*console.log(TextoCPF)
-      console.log(TextoData)
-      console.log(TextoNome)
-      console.log(TextoTel)
-      console.log(Imagem)*/
+      setTImagem(data.toStringImagem())
 
     } else {
-      //console.log("No such document!");
+      console.log("No such document!");
     }
   })  
  } else {
-   //console.log("Não está logado")
+   console.log("Não está logado")
  }
 })
 
-function AlterarDados(){
-setDoc(doc(db, "info-user", Idfirebase), {
-  CPF: TextoCPF,
-  DataNascimnto: TextoData,
-  Nome: TextoNome,
-  Telefone: TextoTel,
-  Imagem: Imagem
+const AlterarDados = ()=>{
+console.log(auth.lastNotifiedUid)
+  setDoc(doc(db, "info-user", auth.lastNotifiedUid), {
+  CPF: vCPF,
+  DataNascimnto: vData,
+  Nome: vNome,
+  Telefone: vTel,
 });
-}
+alert("Dados alterados com sucesso!!!")
+};
 
-      
+const AlterarImagem = ()=>{
+  const auth = getAuth()
+  console.log(auth.lastNotifiedUid)
+  console.log(vImagem)
+    setDoc(doc(db, "info-user", auth.lastNotifiedUid), {
+    CPF: TextoCPF,
+    DataNascimnto: TextoData,
+    Nome: TextoNome,
+    Telefone: TextoTel,
+    Imagem: vImagem
+  });
+  alert("Imagem alterada com sucesso!!!")
+
+  };
+
+      console.log(TextoCPF)
+      console.log(TextoData)
+      console.log(TextoNome)
+      console.log(TextoTel)
+      console.log(TextoImagem)
 
   return (
     <ScrollView>
@@ -161,15 +183,12 @@ setDoc(doc(db, "info-user", Idfirebase), {
         avatarStyle={{justifyContent: 'center'}}
         containerStyle={{ backgroundColor: "#BDBDBD" }}
         icon={{}}
-        onPress={() => {
-          setTImagem(window.prompt("Coloque o link da imagem desejada"));
-        }
-        }
+        onPress={() => setModalImagemVisible(true)}
         overlayContainerStyle={{}}
         placeholderStyle={{}}
         size="large"
         rounded
-        source={Imagem}
+        source={{uri: TextoImagem}}
         titleStyle={{}}
       />
       <ListItem.Content>
@@ -191,34 +210,6 @@ setDoc(doc(db, "info-user", Idfirebase), {
       <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
       <Text style={styles.textoLogin}>Sair</Text>
       </TouchableOpacity>  
-
-      <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
-      <Text style={styles.textoLogin}>Sair</Text>
-      </TouchableOpacity>  
-
-      <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
-      <Text style={styles.textoLogin}>Sair</Text>
-      </TouchableOpacity>  
-
-      <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
-      <Text style={styles.textoLogin}>Sair</Text>
-      </TouchableOpacity>  
-
-      <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
-      <Text style={styles.textoLogin}>Sair</Text>
-      </TouchableOpacity>  
-
-      <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
-      <Text style={styles.textoLogin}>Sair</Text>
-      </TouchableOpacity>  
-
-      <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
-      <Text style={styles.textoLogin}>Sair</Text>
-      </TouchableOpacity>  
-
-      <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
-      <Text style={styles.textoLogin}>Sair</Text>
-      </TouchableOpacity>  
       </View>
     </Card>
     </View>
@@ -229,7 +220,110 @@ setDoc(doc(db, "info-user", Idfirebase), {
 
 
 
-    
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Editar dados:</Text>
+
+      <TextInput 
+       style={styles.inputs}
+       autoCorrect = {false}
+       placeholder = {TextoNome}
+       value= {vNome}
+       onChangeText={ nome => setNome(nome) }  
+      />
+
+      <TextInputMask 
+       style={styles.inputs}
+       placeholder={TextoCPF}
+       type={'cpf'}
+       value={vCPF}
+       onChangeText={ cpf => setCPF(cpf)}
+      />
+
+      <TextInputMask 
+       style={styles.inputs}
+       type={'cel-phone'}
+       placeholder={TextoTel}
+       options={{
+         maskType: 'BRL',
+         withDDD: true,
+         dddMask: '(99)'
+       }}
+       value={vTel}
+       onChangeText={ telefone => setTelefone(telefone)}
+      />
+
+      <TextInputMask 
+       style={styles.inputs}
+       type={'datetime'}
+       placeholder={TextoData}
+       options={{
+         format: 'DD/MM/YYYY'
+       }}
+       value={vData}
+        onChangeText={ nascimento => setData(nascimento) }  
+      />
+
+        <TouchableOpacity style={styles.btnEditConfirm}>
+        <Text style={styles.textoLogin} onPress={AlterarDados}>Alterar</Text>
+        </TouchableOpacity> 
+
+        <TouchableOpacity style={styles.btnEditsair}>
+        <Text style={styles.textoLogin} onPress={() => setModalVisible(!modalVisible)}>Fechar</Text>
+        </TouchableOpacity>   
+          </View>
+        </View>
+      </Modal>
+    </View>
+
+
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalImagemVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalImagemVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Editar dados:</Text>
+
+      <TextInput 
+       style={styles.inputs}
+       autoCorrect = {false}
+       placeholder = {TextoImagem}
+       value= {vImagem}
+       onChangeText={ imagem => setImagem(imagem) }  
+      />
+
+        <TouchableOpacity style={styles.btnEditConfirm}>
+        <Text style={styles.textoLogin} onPress={AlterarImagem}>Alterar</Text>
+        </TouchableOpacity> 
+
+        <TouchableOpacity style={styles.btnEditsair}>
+        <Text style={styles.textoLogin} onPress={
+          () => {
+            setModalImagemVisible(!modalImagemVisible)
+            setImagem("");
+          }}>Fechar</Text>
+        </TouchableOpacity>   
+          </View>
+        </View>
+      </Modal>
+    </View>
 
     </ScrollView>
     
@@ -266,9 +360,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 7,
-      marginTop: 15
       },
-     btnEdit:{
+     btnEditConfirm:{
       backgroundColor: '#3D86D4',
       height: 30,
       width: 60,
@@ -278,6 +371,26 @@ const styles = StyleSheet.create({
       marginTop: 10,
       marginBottom: 10
       },
+      btnEdit:{
+        backgroundColor: '#3D86D4',
+        height: 30,
+        width: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 7,
+        marginTop: 10,
+        marginBottom: 10
+        },
+      btnEditsair:{
+        backgroundColor: '#e13d3d',
+        height: 30,
+        width: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 7,
+        marginTop: 10,
+        marginBottom: 10
+        },
       textoLogin:{
         color: '#FFFFFF',
         fontSize: 17
@@ -289,7 +402,8 @@ const styles = StyleSheet.create({
         marginTop: 22
       },
       modalView: {
-        margin: 20,
+        marginLeft: 20,
+        marginRight: 20,
         backgroundColor: "#FFFFFF",
         borderRadius: 20,
         padding: 35,
