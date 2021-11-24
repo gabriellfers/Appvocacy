@@ -401,7 +401,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 22
       },
+      centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      },
       modalView: {
+        position: 'absolute',
         marginLeft: 20,
         marginRight: 20,
         backgroundColor: "#FFFFFF",
