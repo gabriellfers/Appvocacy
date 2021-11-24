@@ -1,12 +1,12 @@
 ![Appvocacy](https://i.imgur.com/yAVX7uP.png)
 
-# What is it?
+## What is it?
 
-# How to install?
+## How to install?
 
 
 
-# Project Status
+## Project Status
 - [x] UI/UX
 - [x] CRUD User
 - [ ] CRUD Lawyer
