@@ -1,5 +1,4 @@
-![GitHub Light](https://i.imgur.com/yAVX7uP.png#gh-light-mode-only)
-![GitHub Dark](https://i.imgur.com/yAVX7uP.png#gh-dark-mode-only)
+![Appvocacy](https://i.imgur.com/yAVX7uP.png)
 
 #What is it?
 
