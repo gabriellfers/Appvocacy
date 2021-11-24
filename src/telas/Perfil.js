@@ -23,7 +23,8 @@ import {
 import { 
   getAuth,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  deleteUser,
 } from "firebase/auth";
 
 import { 
@@ -39,6 +40,7 @@ export default function Perfil({navigation}) {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalImagemVisible, setModalImagemVisible] = useState(false);
+  const [modalExcluirVisible, setModalExcluirVisible] = useState(false);
 
   const [vCPF, setCPF] = useState();
   const [vData, setData] = useState();
@@ -158,6 +160,24 @@ const AlterarImagem = ()=>{
 
   };
 
+  const ExcluirConta = ()=>{
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  deleteUser(user).then(() => {
+  // User deleted.
+  alert("Usuário excluido com sucesso!!!")
+  navigation.navigate('Cadastro')
+  }).catch((error) => {
+  // An error ocurred
+  // ...
+  const errorCode = error.code;
+  const errorMessage = error.message;
+  alert(errorCode, errorMessage);
+  });
+
+  }
+
       console.log(TextoCPF)
       console.log(TextoData)
       console.log(TextoNome)
@@ -209,6 +229,9 @@ const AlterarImagem = ()=>{
       <View>
       <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
       <Text style={styles.textoLogin}>Sair</Text>
+      </TouchableOpacity>  
+      <TouchableOpacity style={styles.btnExcluir} onPress={()=> setModalExcluirVisible(true)}>
+      <Text style={styles.textoLogin}>!!!PERIGO!!! EXCLUIR CONTA</Text>
       </TouchableOpacity>  
       </View>
     </Card>
@@ -299,7 +322,7 @@ const AlterarImagem = ()=>{
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Editar dados:</Text>
+            <Text style={styles.modalText}>Coloque o link da imagem desejada:</Text>
 
       <TextInput 
        style={styles.inputs}
@@ -319,6 +342,35 @@ const AlterarImagem = ()=>{
             setModalImagemVisible(!modalImagemVisible)
             setImagem("");
           }}>Fechar</Text>
+        </TouchableOpacity>   
+          </View>
+        </View>
+      </Modal>
+    </View>
+
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalExcluirVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalExcluirVisible(!modalImagemVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Você realmente deseja excluir sua conta?</Text>
+
+        <TouchableOpacity style={styles.btnEditConfirm}>
+        <Text style={styles.textoLogin} onPress={ExcluirConta}>Sim</Text>
+        </TouchableOpacity> 
+
+        <TouchableOpacity style={styles.btnEditsair}>
+        <Text style={styles.textoLogin} onPress={
+          () => {
+            setModalExcluirVisible(!modalExcluirVisible)
+          }}>Não</Text>
         </TouchableOpacity>   
           </View>
         </View>
@@ -360,8 +412,16 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 7,
+      marginBottom: 10
       },
-     btnEditConfirm:{
+      btnExcluir:{
+        backgroundColor: '#4a0000',
+        width: 300,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 7,
+        },     btnEditConfirm:{
       backgroundColor: '#3D86D4',
       height: 30,
       width: 60,

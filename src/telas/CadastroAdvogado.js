@@ -50,18 +50,19 @@ export default function CadastroAdvogado({navigation}) {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
-    {label: ' Criminal', value: 'Criminal'},
-    {label: ' Penal', value: 'Penal'},
-    {label: ' Tributário', value: 'Tributário'},
-    {label: ' Trabalhista', value: 'Trabalhista'},
-    {label: ' Contratual', value: 'Contratual'},
     {label: ' Ambiental', value: 'Ambiental'},
-    {label: ' Empresarial', value: 'Empresarial'},
+    {label: ' Civil', value: 'Civil'},
     {label: ' Consumidor', value: 'Consumidor'},
-    {label: ' Estado', value: 'Estado'},
+    {label: ' Contratual', value: 'Contratual'},
+    {label: ' Criminal', value: 'Criminal'},
     {label: ' Eleitoral', value: 'Eleitoral'},
+    {label: ' Empresarial', value: 'Empresarial'},
+    {label: ' Estado', value: 'Estado'},
+    {label: ' Penal', value: 'Penal'},
+    {label: ' Propriedade Intelectual', value: 'Propriedade Intelectual'},
     {label: ' Tecnologia da Informação', value: 'Tecnologia da Informação'},
-    {label: ' Propriedade Intelectual', value: 'Propriedade Intelectual'}
+    {label: ' Trabalhista', value: 'Trabalhista'},
+    {label: ' Tributário', value: 'Tributário'},
   ]);
     
     function cadastrarFirebase(){
