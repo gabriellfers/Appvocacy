@@ -26,37 +26,51 @@ const Buscar = ({navigation}) => {
     <View style={styles.container2}>
       <View style={{ flex: 0.5}}>
       {/* Primeira Coluna */}
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Ambiental"
+      })}>
       <Image style={styles.imagenstopo}
        source={require('../assets/button_ambiental.png')}
       /> 
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Consumidor"
+      })}>
       <Image style={styles.imagens}
        source={require('../assets/button_consumidor.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Criminal"
+      })}>
       <Image style={styles.imagens}
        source={require('../assets/button_criminal.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Empresarial"
+      })}>
       <Image style={styles.imagens}
        source={require('../assets/button_empresarial.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Penal"
+      })}>
       <Image style={styles.imagens}
        source={require('../assets/button_penal.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Tecnologia da Informação"
+      })}>
       <Image style={styles.imagens}
        source={require('../assets/button_t-i.png')}
        />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Tributario"
+      })}>
       <Image style={styles.imagens}
        source={require('../assets/button_tributario.png')}
        />
@@ -64,32 +78,44 @@ const Buscar = ({navigation}) => {
       </View>
       <View style={{ flex: 0.5}}>
 
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Civil"
+      })}>
       <Image style={styles.imagenstopo2}
        source={require('../assets/button_civil.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Contratual"
+      })}>
       <Image style={styles.imagens2}
        source={require('../assets/button_contratual.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Eleitoral"
+      })}>
       <Image style={styles.imagens2}
        source={require('../assets/button_eleitoral.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Estado"
+      })}>
       <Image style={styles.imagens2}
        source={require('../assets/button_estado.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Propriedade Intelectual"
+      })}>
       <Image style={styles.imagens2}
        source={require('../assets/button_prop-intelectual.png')}
       />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ListaBusca')}>
+      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Trabalhista"
+      })}>
       <Image style={styles.imagens2}
        source={require('../assets/button_trabalhista.png')}
        />

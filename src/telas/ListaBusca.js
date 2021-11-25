@@ -21,7 +21,8 @@ import ListItem from './../components/ListItem';
 import { MaterialCommunityIcons, Feather} from '@expo/vector-icons';
 import results from './results';
 
-const ListaBusca = () => {
+const ListaBusca = ({route,navigation}) => {
+  const {tipoescolhido}=route.params;
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState(results);
   const [listar, setListar] = useState(0);
@@ -62,12 +63,13 @@ const ListaBusca = () => {
 
   const seila = async ()=>{
     const db = getFirestore();
-    const q = query(collection(db, "info-advogado"), where("Tipo", "==", "Tecnologia da Informação"));
+    const q = query(collection(db, "info-advogado"), where("Tipo", "==", tipoescolhido));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
     console.log(doc.id, " => ", doc.data());
     console.log(querySnapshot);
   });}
+  seila()
   return (
 
     <SafeAreaView style={styles.container}>
@@ -84,7 +86,6 @@ const ListaBusca = () => {
         <TouchableOpacity style={StyleSheet.botao} onPress={()=>{
           handleOrderClick()
           setClicado(!clicado)
-          seila()
         }
           } style={styles.orderButton}>
           

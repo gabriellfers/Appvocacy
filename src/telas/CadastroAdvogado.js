@@ -194,17 +194,17 @@ export default function CadastroAdvogado({navigation}) {
       setItems={setItems}
 
       listItemContainer={{
-        height: 40,
+        height: 50,
         
       }}
       listItemLabelStyle={{
-        height: 20,
+        height: 30,
     margin: 0,
     marginLeft: 15,
     marginRight: 5,
     borderRadius: 5,
     fontSize: 19,
-    padding: 5,
+    padding: 0,
     color: '#000',
       }}
       modalProps={{
@@ -217,7 +217,7 @@ export default function CadastroAdvogado({navigation}) {
         fontWeight: "bold",
         color: '#000'
       }}
-      modalContainerStyle={{
+      /*modalContainerStyle={{
         marginLeft: 20,
         marginRight: 20,
         backgroundColor: "#FFFFFF",
@@ -232,7 +232,7 @@ export default function CadastroAdvogado({navigation}) {
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
-      }}
+      }}*/
       modalContentContainerStyle={{
     height: 60,
     backgroundColor: '#fff',
