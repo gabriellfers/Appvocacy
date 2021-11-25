@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Modal
+  Modal,
+  Promise
   
 } from 'react-native';
 import { 
@@ -25,6 +26,9 @@ import {
   signOut,
   onAuthStateChanged,
   deleteUser,
+  updateEmail,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
 } from "firebase/auth";
 
 import { 
@@ -41,7 +45,13 @@ export default function Perfil({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalImagemVisible, setModalImagemVisible] = useState(false);
   const [modalExcluirVisible, setModalExcluirVisible] = useState(false);
+  const [modalEmailVisible, setModalEmailVisible] = useState(false);
 
+  const db = getFirestore();
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const [vEmail, setEmail] = useState(user.email);
   const [vCPF, setCPF] = useState();
   const [vData, setData] = useState();
   const [vNome, setNome] = useState();
@@ -52,6 +62,7 @@ export default function Perfil({navigation}) {
   const [TextoCPF, setTCPF] = useState();
   const [TextoData, setTData] = useState();
   const [TextoTel, setTTel] = useState();
+  const [TextoEmail, setTEmail] = useState();
   const [TextoImagem, setTImagem] = useState();
   const [Idfirebase, setUID] = useState();
   var documento = 'info-user';
@@ -95,8 +106,6 @@ export default function Perfil({navigation}) {
         return new User(data.Nome, data.CPF, data.DataNascimnto, data.Telefone, data.Imagem);
     }
 }
-  const db = getFirestore();
-  const auth = getAuth();
 
   function logoutFirebase(){
     const auth = getAuth();
@@ -141,6 +150,7 @@ console.log(auth.lastNotifiedUid)
   DataNascimnto: vData,
   Nome: vNome,
   Telefone: vTel,
+  Imagem: TextoImagem
 });
 alert("Dados alterados com sucesso!!!")
 };
@@ -157,8 +167,7 @@ const AlterarImagem = ()=>{
     Imagem: vImagem
   });
   alert("Imagem alterada com sucesso!!!")
-
-  };
+};
 
   const ExcluirConta = ()=>{
   const auth = getAuth();
@@ -175,8 +184,31 @@ const AlterarImagem = ()=>{
   const errorMessage = error.message;
   alert(errorCode, errorMessage);
   });
+}
 
-  }
+  const AlterarEmail = ()=>{
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const email = user.email;
+  const password = user.password;
+  const credential  = auth.EmailAuthProvider.credential(email, password);
+    
+  user.reauthenticateWithCredential(auth, credential)
+  .catch(e => {
+      console.error(e);
+      throw e;
+  });
+
+  updateEmail(user, TextoEmail).then(() => {
+    alert("Email alterado com sucesso!!!")
+  }).catch((error) => {
+  // An error occurred
+  // ...
+  const errorCode = error.code;
+  const errorMessage = error.message;
+  alert(errorCode, errorMessage);
+  });
+}
 
       console.log(TextoCPF)
       console.log(TextoData)
@@ -216,10 +248,10 @@ const AlterarImagem = ()=>{
           <Text>{TextoNome}</Text>
         </ListItem.Title>
         <ListItem.Subtitle>
-          <Text>Usuário Logado!</Text>
+          <Text>{vEmail}</Text>
         </ListItem.Subtitle>
       </ListItem.Content>
-      <TouchableOpacity style={styles.btnEdit}>
+      <TouchableOpacity style={styles.btnEditar}>
         <Text style={styles.textoLogin} onPress={() => setModalVisible(true)}>Editar</Text>
         </TouchableOpacity> 
     </ListItem>
@@ -227,6 +259,9 @@ const AlterarImagem = ()=>{
     <View style = {styles.container}>
     <Card containerStyle={styles.profile} wrapperStyle={{}}>
       <View>
+      <TouchableOpacity style={styles.btn} onPress={()=> setModalEmailVisible(true)}>
+      <Text style={styles.textoLogin}>Trocar Email</Text>
+      </TouchableOpacity> 
       <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
       <Text style={styles.textoLogin}>Sair</Text>
       </TouchableOpacity>  
@@ -377,6 +412,43 @@ const AlterarImagem = ()=>{
       </Modal>
     </View>
 
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalEmailVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalEmailVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Digite seu novo email:</Text>
+
+      <TextInput 
+       style={styles.inputs}
+       autoCorrect = {false}
+       placeholder = {vEmail}
+       value= {TextoEmail}
+       onChangeText={ email => setTEmail(email) }  
+      />
+
+        <TouchableOpacity style={styles.btnEditConfirm}>
+        <Text style={styles.textoLogin} onPress={AlterarEmail}>Alterar</Text>
+        </TouchableOpacity> 
+
+        <TouchableOpacity style={styles.btnEditsair}>
+        <Text style={styles.textoLogin} onPress={
+          () => {
+            setModalEmailVisible(!modalEmailVisible)
+          }}>Fechar</Text>
+        </TouchableOpacity>   
+          </View>
+        </View>
+      </Modal>
+    </View>
+    
     </ScrollView>
     
   );
@@ -406,7 +478,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     btnLogout:{
-      backgroundColor: '#4a0000',
+      backgroundColor: '#e13d3d',
       width: 300,
       height: 40,
       alignItems: 'center',
@@ -421,7 +493,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 7,
-        },     btnEditConfirm:{
+        },     
+      btnEditConfirm:{
       backgroundColor: '#3D86D4',
       height: 30,
       width: 60,
@@ -431,7 +504,16 @@ const styles = StyleSheet.create({
       marginTop: 10,
       marginBottom: 10
       },
-      btnEdit:{
+      btn:{
+      backgroundColor: '#3D86D4',
+      width: 300,
+      height: 40,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 7,
+      marginBottom: 10
+      },
+      btnEditar:{
         backgroundColor: '#3D86D4',
         height: 30,
         width: 60,

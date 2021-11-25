@@ -1,3 +1,25 @@
+import {
+  collection, 
+  query, 
+  where, 
+  getDocs,
+  getFirestore
+} from "firebase/firestore";
+
+
+const seila = async ()=>{
+  const db = getFirestore();
+  const q = query(collection(db, "info-advogado"), where("Tipo", "==", "Criminal"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+  console.log(doc.id, " => ", doc.data());
+  console.log(q);
+});}
+
+
+
+
 export default [
     {
       id: 1,

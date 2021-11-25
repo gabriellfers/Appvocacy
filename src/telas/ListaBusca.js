@@ -9,6 +9,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {
+  collection, 
+  query, 
+  where, 
+  getDocs,
+  getFirestore
+} from "firebase/firestore";
+
 import ListItem from './../components/ListItem';
 import { MaterialCommunityIcons, Feather} from '@expo/vector-icons';
 import results from './results';
@@ -51,12 +59,20 @@ const ListaBusca = () => {
     console.log(listar)
   };
 
+
+  const seila = async ()=>{
+    const db = getFirestore();
+    const q = query(collection(db, "info-advogado"), where("Tipo", "==", "Tecnologia da Informação"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+    console.log(querySnapshot);
+  });}
   return (
 
     <SafeAreaView style={styles.container}>
-
+      
       <View style={styles.searchArea}>
-
         <TextInput
           style={styles.input}
           placeholder= "Pesquise"
@@ -68,6 +84,7 @@ const ListaBusca = () => {
         <TouchableOpacity style={StyleSheet.botao} onPress={()=>{
           handleOrderClick()
           setClicado(!clicado)
+          seila()
         }
           } style={styles.orderButton}>
           
