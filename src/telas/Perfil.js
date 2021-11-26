@@ -64,6 +64,7 @@ export default function Perfil({navigation}) {
   const [TextoTel, setTTel] = useState();
   const [TextoEmail, setTEmail] = useState();
   const [TextoImagem, setTImagem] = useState();
+  const [TextoAvatar, setTextoAvatar] = useState("?");
   const [Idfirebase, setUID] = useState();
   var documento = 'info-user';
 
@@ -215,6 +216,7 @@ const AlterarImagem = ()=>{
       console.log(TextoNome)
       console.log(TextoTel)
       console.log(TextoImagem)
+      console.log(TextoAvatar)
 
   return (
     <ScrollView>
@@ -234,13 +236,20 @@ const AlterarImagem = ()=>{
         activeOpacity={0.2}
         avatarStyle={{justifyContent: 'center'}}
         containerStyle={{ backgroundColor: "#BDBDBD" }}
-        icon={{}}
         onPress={() => setModalImagemVisible(true)}
-        overlayContainerStyle={{}}
-        placeholderStyle={{}}
         size="large"
         rounded
-        source={{uri: TextoImagem}}
+        title={TextoAvatar}
+        source={{uri: TextoImagem}
+          /*(()=>{
+          if(TextoImagem){
+            {uri: TextoImagem}
+          }
+          else{
+            null
+          }
+        })*/
+      }
         titleStyle={{}}
       />
       <ListItem.Content>
@@ -266,7 +275,7 @@ const AlterarImagem = ()=>{
       <Text style={styles.textoLogin}>Sair</Text>
       </TouchableOpacity>  
       <TouchableOpacity style={styles.btnExcluir} onPress={()=> setModalExcluirVisible(true)}>
-      <Text style={styles.textoLogin}>!!!PERIGO!!! EXCLUIR CONTA</Text>
+      <Text style={styles.textoLogin}>EXCLUIR CONTA</Text>
       </TouchableOpacity>  
       </View>
     </Card>

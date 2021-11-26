@@ -25,6 +25,7 @@ import {
 import { 
   doc, 
   setDoc, 
+  getDoc,
   getFirestore
 } from "firebase/firestore";
 
@@ -90,16 +91,30 @@ export default function CadastroAdvogado({navigation}) {
         })
       };
   
+
+
+      const Verificar = async ()=>{
       const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, async (user) => {
      if (user) {
-       console.log("Bem vindo: " +user.uid)
-       const uid = user.uid;
-       navigation.navigate("ChatsAdvogado")
+      const docRef = doc(db, "info-advogado", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      console.log("Bem vindo: " +user.uid)
+      navigation.navigate("PerfilAdvogado")
+      } else {
+      // doc.data() will be undefined in this case
+      alert("A conta logada no momento não é uma conta de advogado");
+      }
      } else {
        console.log("Não está logado")
      }
      });
+    }
+
+
+    Verificar();
 
     return(
 

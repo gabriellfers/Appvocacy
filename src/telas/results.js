@@ -1,6 +1,6 @@
-export default [
+/*export default [
     {
-      id: 1,
+     id: 1,
       name: 'Beatriz Farias',
       email: 'Direito criminal',
       avatar: 'https://i.pravatar.cc/150?img=31',
@@ -41,5 +41,10 @@ export default [
       email: 'Direito criminal',
       avatar: 'https://i.pravatar.cc/150?img=37',
     },
-  ];
+  ];*/
+
+
+  export async function getDados(){
+
+  }
   

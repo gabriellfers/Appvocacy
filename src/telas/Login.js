@@ -59,17 +59,6 @@ export default function Login({navigation}) {
         alert(errorCode, errorMessage);
       });
    }
-
-   function logoutFirebase(){
-    const auth = getAuth();
-  signOut(auth).then(() => {
-    alert("Deslogado")
-  }).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alert(errorCode, errorMessage);
-  });
-  }
   
    const auth = getAuth();
    onAuthStateChanged(auth, (user) => {

@@ -18,12 +18,19 @@ onAuthStateChanged
 } from "firebase/auth";
 require ("./../../firebaseConfig.js")
 
+import { 
+  getDoc,
+  doc,
+  getFirestore
+} from "firebase/firestore";
+
 import { Ionicons } from '@expo/vector-icons';
 import logo from './../assets/logo.png';
 
 
 export default function Login({navigation}) {
   
+  const db = getFirestore();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [ocultarSenha, setOcultarSenha] = useState (true);
@@ -45,7 +52,7 @@ export default function Login({navigation}) {
 
   }
 
-  function logarFirebase(){
+  function logarFirebaseA(){
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, senha)
       .then((userCredential) => {
@@ -59,16 +66,30 @@ export default function Login({navigation}) {
       });
    }
 
-   const auth = getAuth();
-   onAuthStateChanged(auth, (user) => {
-  if (user) {
+
+  
+   const Verificar = async ()=>{
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+   if (user) {
+    const docRef = doc(db, "info-advogado", user.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
     console.log("Bem vindo: " +user.uid)
-    const uid = user.uid;
-    navigation.navigate("ChatsAdvogado")
-  } else {
-    console.log("Não está logado")
+    navigation.navigate("PerfilAdvogado")
+    } else {
+    // doc.data() will be undefined in this case
+    alert("A conta logada no momento não é uma conta de advogado");
+    }
+   } else {
+     console.log("Não está logado")
+   }
+   });
   }
-  });
+
+
+  Verificar();
 
 
   return (
@@ -109,7 +130,7 @@ export default function Login({navigation}) {
     </TouchableOpacity>
     </View>
 
-      <TouchableOpacity style={styles.btnLogin} onPress={()=>{logarFirebase()}}>
+      <TouchableOpacity style={styles.btnLogin} onPress={()=>{logarFirebaseA()}}>
         <Text style={styles.textoLogin}>Fazer Login</Text>
       </TouchableOpacity>
 

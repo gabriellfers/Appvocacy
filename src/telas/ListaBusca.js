@@ -7,6 +7,7 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Text
 } from 'react-native';
 
 import {
@@ -14,44 +15,56 @@ import {
   query, 
   where, 
   getDocs,
-  getFirestore
+  getFirestore,
+  orderBy, 
+  limit
 } from "firebase/firestore";
 
-import ListItem from './../components/ListItem';
+import { 
+  Avatar,
+  ListItem
+} from "react-native-elements";
+
+import { TouchableHighlight } from "react-native";
 import { MaterialCommunityIcons, Feather} from '@expo/vector-icons';
 import results from './results';
+import { render } from 'react-dom';
 
 const ListaBusca = ({route,navigation}) => {
   const {tipoescolhido}=route.params;
   const [searchText, setSearchText] = useState('');
-  const [list, setList] = useState(results);
-  const [listar, setListar] = useState(0);
+  const [listar, setListar] = useState();
+  const [advogados, setAdvogados] = useState();
   const [clicado, setClicado] = useState (false);
 
-  useEffect(() => {
-    if (searchText === '') {
-      setList(results);
-    } else {
-      setList(
-        results.filter(
-          (item) =>
-            item.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
-        )
-      );
-    }
-  }, [searchText]);
+
+  useEffect(async()=> {
+    const db = getFirestore();
+    var vquery = query(collection(db,'info-advogado'), where('Tipo','==', tipoescolhido))
+    var data = []
+    getDocs(vquery).then(resultados=>{
+      resultados.forEach(doc=>{
+        var Adv = doc.data()
+        Adv.id = doc.id
+        data.push(Adv) 
+      })
+      setAdvogados(data)
+    })
+    console.log(advogados)
+  },[])
+
 
   const handleOrderClick = () => {
-    let newList = [...list];
+    let newList = [...advogados];
 
       
     if(listar==0){
-      setList(newList.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0)))
+      setAdvogados(newList.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0)))
       setListar(1)
       console.log("crescente")
     }
     else{
-      setList(newList.sort((a, b) => (a.name < b.name ? 1 : b.name < a.name ? -1 : 0)))
+      setAdvogados(newList.sort((a, b) => (a.name < b.name ? 1 : b.name < a.name ? -1 : 0)))
       setListar(0)
       console.log("decrescente")
     }
@@ -67,7 +80,6 @@ const ListaBusca = ({route,navigation}) => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
     console.log(doc.id, " => ", doc.data());
-    console.log(querySnapshot);
   });}
   seila()
   return (
@@ -84,8 +96,8 @@ const ListaBusca = ({route,navigation}) => {
         />
 
         <TouchableOpacity style={StyleSheet.botao} onPress={()=>{
-          handleOrderClick()
           setClicado(!clicado)
+          handleOrderClick()
         }
           } style={styles.orderButton}>
           
@@ -99,12 +111,45 @@ const ListaBusca = ({route,navigation}) => {
 
       </View>
 
-      <FlatList
-        data={list}
+      {advogados && <FlatList
+        data={advogados}
         style={styles.list}
-        renderItem={({ item }) => <ListItem data={item} />}
-        keyExtractor={(item) => item.id}
+        renderItem={({ item })=>
+        <View key={item.id}>
+        <ListItem
+        Component={TouchableHighlight}
+        containerStyle={{
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: "#e6e6e6",
+        borderTopColor:"#FFF",
+        }}
+        disabledStyle={{ opacity: 0.5 }}
+        pad={20}>
+        <Avatar
+        activeOpacity={0.2}
+        avatarStyle={{justifyContent: 'center'}}
+        containerStyle={{ backgroundColor: "#BDBDBD" }}
+        size="large"
+        rounded
+        source={{}}
+        title={item.Nome.charAt(0)}
+        titleStyle={{}}
       />
+      <ListItem.Content>
+
+        <ListItem.Title>
+        <Text> {item.Nome} </Text>
+        </ListItem.Title>
+
+        <ListItem.Subtitle>
+        <Text> {item.Tipo} </Text>
+        </ListItem.Subtitle>
+      </ListItem.Content>
+        </ListItem>
+        </View>
+      }
+      />}
 
     </SafeAreaView>
   );
@@ -113,7 +158,6 @@ const ListaBusca = ({route,navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   botao:{
     marginRight: 10
@@ -137,6 +181,9 @@ const styles = StyleSheet.create({
   searchArea: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: "#e6e6e6",
   },
   orderButton: {
     width: 32,

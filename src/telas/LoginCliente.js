@@ -21,9 +21,16 @@ require ("./../../firebaseConfig.js")
 import { Ionicons } from '@expo/vector-icons';
 import logo from './../assets/logo.png';
 
+import { 
+  getDoc, 
+  doc,
+  getFirestore
+} from "firebase/firestore";
+
 
 export default function Login({navigation}) {
   
+  const db = getFirestore();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [ocultarSenha, setOcultarSenha] = useState (true);
@@ -59,17 +66,28 @@ export default function Login({navigation}) {
       });
    }
   
-   const auth = getAuth();
-   onAuthStateChanged(auth, (user) => {
-  if (user) {
+   const Verificar = async ()=>{
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+   if (user) {
+    const docRef = doc(db, "info-user", user.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
     console.log("Bem vindo: " +user.uid)
-    const uid = user.uid;
     navigation.navigate("Main")
-  } else {
-    console.log("Não está logado")
+    } else {
+    // doc.data() will be undefined in this case
+    alert("A conta logada no momento não é uma conta de cliente");
+    }
+   } else {
+     console.log("Não está logado")
+   }
+   });
   }
-  });
 
+
+  Verificar();
 
   return (
     <ScrollView style={styles.fundo}>
