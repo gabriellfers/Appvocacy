@@ -10,6 +10,7 @@
 - [x] UI/UX
 - [x] CRUD User
 - [x] CRUD Lawyer
+- [ ] Search (almost done)
 - [ ] Chats
 
 
