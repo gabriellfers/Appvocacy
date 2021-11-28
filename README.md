@@ -9,7 +9,7 @@
 ## Project Status
 - [x] UI/UX
 - [x] CRUD User
-- [ ] CRUD Lawyer
+- [x] CRUD Lawyer
 - [ ] Chats
 
 
