@@ -198,7 +198,7 @@ const Buscar = ({navigation}) => {
         backgroundColor: "#D49D3D",
         width: 300,
         marginBottom: 10,
-        padding: 10,
+        padding: 20,
         borderRadius: 11
       }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Tributário"

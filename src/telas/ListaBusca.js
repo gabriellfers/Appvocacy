@@ -132,7 +132,9 @@ const ListaBusca = ({route,navigation}) => {
         containerStyle={{ backgroundColor: "#BDBDBD" }}
         size="large"
         rounded
-        source={item.Imagem}
+        source={{
+          uri: item.Imagem
+        }}
         title={item.Nome.charAt(0)}
         titleStyle={{}}
       />
