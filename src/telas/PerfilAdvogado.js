@@ -52,37 +52,40 @@ export default function Perfil({navigation}) {
   const user = auth.currentUser;
 
   const [vEmail, setEmail] = useState(user.email);
-  const [vCPF, setCPF] = useState();
-  const [vData, setData] = useState();
+  const [vOAB, setOAB] = useState();
+  const [vEndereco, setEndereco] = useState();
   const [vNome, setNome] = useState();
   const [vTel, setTelefone] = useState();
   const [vImagem, setImagem] = useState();
+  const [vTipo, setTipo] = useState();
 
   const [TextoNome, setTNome] = useState();
-  const [TextoCPF, setTCPF] = useState();
-  const [TextoData, setTData] = useState();
+  const [TextoOAB, setTOAB] = useState();
+  const [TextoEndereco, setTEndereco] = useState();
   const [TextoTel, setTTel] = useState();
   const [TextoEmail, setTEmail] = useState();
   const [TextoImagem, setTImagem] = useState();
+  const [TextoTipo, setTTipo] = useState();
   const [Idfirebase, setUID] = useState();
   var documento = 'info-user';
 
   class User {
-    constructor (Nome, CPF, DataNascimnto, Telefone, Imagem ) {
+    constructor (Nome, OAB, Endereco, Telefone, Imagem, Tipo ) {
         this.Nome = Nome;
-        this.CPF = CPF;
-        this.DataNascimnto = DataNascimnto;
+        this.OAB = OAB;
+        this.Endereco = Endereco;
         this.Telefone = Telefone;
         this.Imagem = Imagem;
+        this.Tipo = Tipo;
     }
     toStringNome() {
       return this.Nome;
     }
-    toStringCPF() {
-      return this.CPF;
+    toStringOAB() {
+      return this.OAB;
     }
-    toStringData() {
-      return this.DataNascimnto;
+    toStringEndereco() {
+      return this.Endereco;
     }
     toStringTel() {
       return this.Telefone;
@@ -90,20 +93,24 @@ export default function Perfil({navigation}) {
     toStringImagem() {
       return this.Imagem;
     }
+    toStringTipo() {
+      return this.Tipo;
+    }
 }
   const userConverter = {
     toFirestore: (documento) => {
         return {
             Nome: documento.Nome,
-            CPF: documento.CPF,
-            DataNascimnto: documento.DataNascimnto,
+            OAB: documento.OAB,
+            Endereco: documento.Endereco,
             Telefone: documento.Telefone,
-            Imagem: documento.Imagem
+            Imagem: documento.Imagem,
+            Tipo: documento.Tipo,
             };
     },
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new User(data.Nome, data.CPF, data.DataNascimnto, data.Telefone, data.Imagem);
+        return new User(data.Nome, data.OAB, data.Endereco, data.Telefone, data.Imagem, data.Tipo);
     }
 }
 
@@ -122,17 +129,18 @@ export default function Perfil({navigation}) {
   onAuthStateChanged(auth, (user) => {
  if (user) {
    console.log("Usuario logado: " +user.uid)
-   getDoc(doc(db, "info-user", user.uid).withConverter(userConverter)).then(docSnap => {
+   getDoc(doc(db, "info-advogado", user.uid).withConverter(userConverter)).then(docSnap => {
      setUID(user.uid)
     if (docSnap.exists()) {
      // console.log("Document data:", docSnap.data());
       var data = docSnap.data()
 
       setTNome(data.toStringNome())
-      setTCPF(data.toStringCPF())
-      setTData(data.toStringData())
+      setTOAB(data.toStringOAB())
+      setTEndereco(data.toStringEndereco())
       setTTel(data.toStringTel())
       setTImagem(data.toStringImagem())
+      setTTipo(data.toStringTipo())
 
     } else {
       console.log("No such document!");
@@ -140,34 +148,47 @@ export default function Perfil({navigation}) {
   })  
  } else {
    console.log("Não está logado")
+   navigation.navigate('Cadastro')
  }
 })
 
 const AlterarDados = ()=>{
 console.log(auth.lastNotifiedUid)
-  setDoc(doc(db, "info-user", auth.lastNotifiedUid), {
-  CPF: vCPF,
-  DataNascimnto: vData,
+if(vNome == null | vEndereco == null | vTel == null | vOAB == null){
+  alert("Preencha todos os campos")
+}
+else{
+  setDoc(doc(db, "info-advogado", auth.lastNotifiedUid), {
+  OAB: vOAB,
+  Endereco: vEndereco,
   Nome: vNome,
   Telefone: vTel,
-  Imagem: TextoImagem
+  Imagem: TextoImagem,
+  Tipo: TextoTipo
 });
 alert("Dados alterados com sucesso!!!")
+}
 };
 
 const AlterarImagem = ()=>{
   const auth = getAuth()
   console.log(auth.lastNotifiedUid)
+  if(vImagem == null){
+    alert("Preencha todos os campos")
+    }
+    else{
   console.log(vImagem)
-    setDoc(doc(db, "info-user", auth.lastNotifiedUid), {
-    CPF: TextoCPF,
-    DataNascimnto: TextoData,
+    setDoc(doc(db, "info-advogado", auth.lastNotifiedUid), {
+    OAB: TextoOAB,
+    Endereco: TextoEndereco,
     Nome: TextoNome,
     Telefone: TextoTel,
+    Tipo: TextoTipo,
     Imagem: vImagem
   });
   alert("Imagem alterada com sucesso!!!")
-};
+}
+}
 
   const ExcluirConta = ()=>{
   const auth = getAuth();
@@ -191,16 +212,14 @@ const AlterarImagem = ()=>{
   const user = auth.currentUser;
   const email = user.email;
   const password = user.password;
-  const credential  = auth.EmailAuthProvider.credential(email, password);
-    
-  user.reauthenticateWithCredential(auth, credential)
-  .catch(e => {
-      console.error(e);
-      throw e;
-  });
-
-  updateEmail(user, TextoEmail).then(() => {
+  if(TextoEmail == null){
+    alert("Preencha todos os campos")
+  }
+  else{
+  updateEmail(auth.currentUser, TextoEmail).then(() => {
     alert("Email alterado com sucesso!!!")
+    alert("Entre com seu novo email")
+    navigation.navigate('Cadastro')
   }).catch((error) => {
   // An error occurred
   // ...
@@ -209,12 +228,14 @@ const AlterarImagem = ()=>{
   alert(errorCode, errorMessage);
   });
 }
+}
 
-      console.log(TextoCPF)
-      console.log(TextoData)
+      console.log(TextoOAB)
+      console.log(TextoEndereco)
       console.log(TextoNome)
       console.log(TextoTel)
       console.log(TextoImagem)
+      console.log(TextoTipo)
 
   return (
     <ScrollView>
@@ -236,12 +257,10 @@ const AlterarImagem = ()=>{
         containerStyle={{ backgroundColor: "#BDBDBD" }}
         icon={{}}
         onPress={() => setModalImagemVisible(true)}
-        overlayContainerStyle={{}}
-        placeholderStyle={{}}
         size="large"
         rounded
+        title="+"
         source={{uri: TextoImagem}}
-        titleStyle={{}}
       />
       <ListItem.Content>
         <ListItem.Title>
@@ -258,6 +277,7 @@ const AlterarImagem = ()=>{
 
     <View style = {styles.container}>
     <Card containerStyle={styles.profile} wrapperStyle={{}}>
+      <Text style={styles.titulo}>Opções:</Text>
       <View>
       <TouchableOpacity style={styles.btn} onPress={()=> setModalEmailVisible(true)}>
       <Text style={styles.textoLogin}>Trocar Email</Text>
@@ -266,7 +286,7 @@ const AlterarImagem = ()=>{
       <Text style={styles.textoLogin}>Sair</Text>
       </TouchableOpacity>  
       <TouchableOpacity style={styles.btnExcluir} onPress={()=> setModalExcluirVisible(true)}>
-      <Text style={styles.textoLogin}>!!!PERIGO!!! EXCLUIR CONTA</Text>
+      <Text style={styles.textoLogin}>EXCLUIR CONTA</Text>
       </TouchableOpacity>  
       </View>
     </Card>
@@ -302,10 +322,13 @@ const AlterarImagem = ()=>{
 
       <TextInputMask 
        style={styles.inputs}
-       placeholder={TextoCPF}
-       type={'cpf'}
-       value={vCPF}
-       onChangeText={ cpf => setCPF(cpf)}
+       type={'custom'}
+       placeholder={TextoOAB}
+       options={{
+         mask: ' 999999'
+       }}
+       value={vOAB}
+       onChangeText={ oab => setOAB(oab)}
       />
 
       <TextInputMask 
@@ -321,15 +344,11 @@ const AlterarImagem = ()=>{
        onChangeText={ telefone => setTelefone(telefone)}
       />
 
-      <TextInputMask 
-       style={styles.inputs}
-       type={'datetime'}
-       placeholder={TextoData}
-       options={{
-         format: 'DD/MM/YYYY'
-       }}
-       value={vData}
-        onChangeText={ nascimento => setData(nascimento) }  
+      <TextInput 
+        style={styles.inputs}
+        autoCorrect = {false}
+        placeholder = {TextoEndereco}
+        onChangeText={ endereco => setEndereco(endereco) }  
       />
 
         <TouchableOpacity style={styles.btnEditConfirm}>
@@ -455,6 +474,10 @@ const AlterarImagem = ()=>{
 }
 
 const styles = StyleSheet.create({
+    titulo:{
+      fontSize: 24,
+      marginBottom: 10
+    },
     modalText:{
       fontSize: 25,
       fontWeight: 'bold',

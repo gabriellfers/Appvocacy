@@ -132,18 +132,18 @@ const ListaBusca = ({route,navigation}) => {
         containerStyle={{ backgroundColor: "#BDBDBD" }}
         size="large"
         rounded
-        source={{}}
+        source={item.Imagem}
         title={item.Nome.charAt(0)}
         titleStyle={{}}
       />
       <ListItem.Content>
 
         <ListItem.Title>
-        <Text> {item.Nome} </Text>
+        <Text style={styles.nome}> {item.Nome} </Text>
         </ListItem.Title>
 
         <ListItem.Subtitle>
-        <Text> {item.Tipo} </Text>
+        <Text style={styles.tipo}> {item.Tipo} </Text>
         </ListItem.Subtitle>
       </ListItem.Content>
         </ListItem>
@@ -158,6 +158,12 @@ const ListaBusca = ({route,navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  nome:{
+    fontSize: 24,
+  },
+  tipo:{
+   fontSize: 18,
   },
   botao:{
     marginRight: 10

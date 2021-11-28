@@ -64,7 +64,6 @@ export default function Perfil({navigation}) {
   const [TextoTel, setTTel] = useState();
   const [TextoEmail, setTEmail] = useState();
   const [TextoImagem, setTImagem] = useState();
-  const [TextoAvatar, setTextoAvatar] = useState("?");
   const [Idfirebase, setUID] = useState();
   var documento = 'info-user';
 
@@ -141,11 +140,16 @@ export default function Perfil({navigation}) {
   })  
  } else {
    console.log("Não está logado")
+   navigation.navigate('Cadastro')
  }
 })
 
 const AlterarDados = ()=>{
 console.log(auth.lastNotifiedUid)
+if(vCPF == null | vData == null | vNome == null | vTel == null){
+  alert("Preencha todos os campos")
+}
+else{
   setDoc(doc(db, "info-user", auth.lastNotifiedUid), {
   CPF: vCPF,
   DataNascimnto: vData,
@@ -154,11 +158,16 @@ console.log(auth.lastNotifiedUid)
   Imagem: TextoImagem
 });
 alert("Dados alterados com sucesso!!!")
+}
 };
 
 const AlterarImagem = ()=>{
   const auth = getAuth()
   console.log(auth.lastNotifiedUid)
+  if(vImagem == null){
+  alert("Preencha todos os campos")
+  }
+  else{
   console.log(vImagem)
     setDoc(doc(db, "info-user", auth.lastNotifiedUid), {
     CPF: TextoCPF,
@@ -168,7 +177,8 @@ const AlterarImagem = ()=>{
     Imagem: vImagem
   });
   alert("Imagem alterada com sucesso!!!")
-};
+}
+}
 
   const ExcluirConta = ()=>{
   const auth = getAuth();
@@ -192,16 +202,14 @@ const AlterarImagem = ()=>{
   const user = auth.currentUser;
   const email = user.email;
   const password = user.password;
-  const credential  = auth.EmailAuthProvider.credential(email, password);
-    
-  user.reauthenticateWithCredential(auth, credential)
-  .catch(e => {
-      console.error(e);
-      throw e;
-  });
-
+  if(TextoEmail == null){
+    alert("Preencha todos os campos")
+  }
+  else{
   updateEmail(user, TextoEmail).then(() => {
     alert("Email alterado com sucesso!!!")
+    alert("Entre com seu novo email")
+    navigation.navigate('Cadastro')
   }).catch((error) => {
   // An error occurred
   // ...
@@ -211,12 +219,13 @@ const AlterarImagem = ()=>{
   });
 }
 
+}
+
       console.log(TextoCPF)
       console.log(TextoData)
       console.log(TextoNome)
       console.log(TextoTel)
       console.log(TextoImagem)
-      console.log(TextoAvatar)
 
   return (
     <ScrollView>
@@ -239,7 +248,7 @@ const AlterarImagem = ()=>{
         onPress={() => setModalImagemVisible(true)}
         size="large"
         rounded
-        title={TextoAvatar}
+        title="+"
         source={{uri: TextoImagem}
           /*(()=>{
           if(TextoImagem){
@@ -267,6 +276,7 @@ const AlterarImagem = ()=>{
 
     <View style = {styles.container}>
     <Card containerStyle={styles.profile} wrapperStyle={{}}>
+      <Text style={styles.titulo}>Opções:</Text>
       <View>
       <TouchableOpacity style={styles.btn} onPress={()=> setModalEmailVisible(true)}>
       <Text style={styles.textoLogin}>Trocar Email</Text>
@@ -464,6 +474,10 @@ const AlterarImagem = ()=>{
 }
 
 const styles = StyleSheet.create({
+    titulo:{
+      fontSize: 24,
+      marginBottom: 10
+    },
     modalText:{
       fontSize: 25,
       fontWeight: 'bold',

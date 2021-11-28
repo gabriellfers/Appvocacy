@@ -81,6 +81,8 @@ export default function CadastroCliente({navigation}) {
           } else {
           // doc.data() will be undefined in this case
           alert("A conta logada no momento não é uma conta de cliente");
+          alert("Entre na área certa e saia da conta para poder cadastrar/logar em outra");
+          navigation.navigate("Cadastro")
           }
          } else {
            console.log("Não está logado")

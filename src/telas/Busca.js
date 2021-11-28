@@ -13,8 +13,10 @@ import {
 } from 'react-native-gesture-handler';
 
 import { 
-  Searchbar 
-} from 'react-native-paper';
+  Card,
+} from "react-native-elements";
+
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'; 
 
 const Buscar = ({navigation}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -22,151 +24,206 @@ const Buscar = ({navigation}) => {
 
   return (
     <ScrollView>
-    
-    <View style={styles.container2}>
-      <View style={{ flex: 0.5}}>
-      {/* Primeira Coluna */}
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+    <Card containerStyle={styles.profile} >
+    <Text style={styles.titulo}>Escolha o assunto desejado</Text>
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Ambiental"
       })}>
-      <Image style={styles.imagenstopo}
-       source={require('../assets/button_ambiental.png')}
-      /> 
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="tree" size={20} color="#FFF" />    Direito Ambiental</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Administrativo"
+      })}>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="fax" size={20} color="#FFF" />    Direito Administrativo</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
+       tipoescolhido:"Civil"
+      })}>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="vcard" size={20} color="#FFF" />    Direito Civil</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Consumidor"
       })}>
-      <Image style={styles.imagens}
-       source={require('../assets/button_consumidor.png')}
-      />
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="shopping-cart" size={20} color="#FFF" />    Direito Consumidor</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
+       tipoescolhido:"Contratual"
+      })}>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="archive" size={20} color="#FFF" />    Direito Contratual</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Criminal"
       })}>
-      <Image style={styles.imagens}
-       source={require('../assets/button_criminal.png')}
-      />
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="chain" size={20} color="#FFF" />    Direito Criminal</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
-        tipoescolhido:"Empresarial"
-      })}>
-      <Image style={styles.imagens}
-       source={require('../assets/button_empresarial.png')}
-      />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
-        tipoescolhido:"Penal"
-      })}>
-      <Image style={styles.imagens}
-       source={require('../assets/button_penal.png')}
-      />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
-        tipoescolhido:"Tecnologia da Informação"
-      })}>
-      <Image style={styles.imagens}
-       source={require('../assets/button_t-i.png')}
-       />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
-        tipoescolhido:"Tributario"
-      })}>
-      <Image style={styles.imagens}
-       source={require('../assets/button_tributario.png')}
-       />
-      </TouchableOpacity>
-      </View>
-      <View style={{ flex: 0.5}}>
 
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
-        tipoescolhido:"Civil"
-      })}>
-      <Image style={styles.imagenstopo2}
-       source={require('../assets/button_civil.png')}
-      />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
-        tipoescolhido:"Contratual"
-      })}>
-      <Image style={styles.imagens2}
-       source={require('../assets/button_contratual.png')}
-      />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Eleitoral"
       })}>
-      <Image style={styles.imagens2}
-       source={require('../assets/button_eleitoral.png')}
-      />
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome5 name="vote-yea" size={20} color="#FFF" />    Direito Eleitoral</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Empresarial"
+      })}>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="briefcase" size={20} color="#FFF" />    Direito Empresarial</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Estado"
       })}>
-      <Image style={styles.imagens2}
-       source={require('../assets/button_estado.png')}
-      />
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="flag" size={20} color="#FFF" />    Direito do Estado</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Penal"
+      })}>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="legal" size={20} color="#FFF" />    Direito Penal</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Previdenciário"
+      })}>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome5 name="money-check-alt" size={20} color="#FFF" />    Direito Previdenciário</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Propriedade Intelectual"
       })}>
-      <Image style={styles.imagens2}
-       source={require('../assets/button_prop-intelectual.png')}
-      />
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="commenting" size={20} color="#FFF" />    Direito da Propriedade Intelctual</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('ListaBusca', {
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Tecnologia da Informação"
+      })}>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="laptop" size={20} color="#FFF" />    Direito da Tecnologia da Informação</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 20,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Trabalhista"
       })}>
-      <Image style={styles.imagens2}
-       source={require('../assets/button_trabalhista.png')}
-       />
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="industry" size={20} color="#FFF" />    Direito Trabalhista</Text>
       </TouchableOpacity>
-      </View>
-      </View>
+
+      <TouchableOpacity style={{
+        backgroundColor: "#D49D3D",
+        width: 300,
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 11
+      }} onPress={() => navigation.push('ListaBusca', {
+        tipoescolhido:"Tributário"
+      })}>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="file-text" size={20} color="#FFF" />    Direito Tributário</Text>
+      </TouchableOpacity>
+      </Card>
       </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container2: {
-    flex: 0.5,
-    flexDirection: "row",
-    padding: 10,
     marginBottom: 5,
+    alignItems: "center",
   },
-  container: {
-    flex: 0.5,
+  profile:{
+    alignItems: "center",
+    textAlign: "center",
+    marginBottom: 10
   },
-  imagenstopo:{
-    height: 60,
-    width: 190,
-    marginTop: 25,
-    marginBottom: 25,
-    borderRadius: 5,
-    flexDirection: "row",
-  },
-  imagens:{
-    height: 60,
-    width: 190,
-    marginBottom: 25,
-    borderRadius: 5,
-    flexDirection: "row",
-  },
-  imagenstopo2:{
-    height: 60,
-    width: 190,
-    marginTop: 25,
-    marginLeft: 7,
-    marginBottom: 25,
-    borderRadius: 5,
-    flexDirection: "row",
-  },
-  imagens2:{
-    height: 60,
-    width: 190,
-    marginLeft: 7,
-    marginBottom: 25,
-    borderRadius: 5,
-    flexDirection: "row",
+  titulo:{
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 15,
   },
 });
 

@@ -52,6 +52,7 @@ export default function CadastroAdvogado({navigation}) {
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
     {label: ' Ambiental', value: 'Ambiental'},
+    {label: ' Adminstrativo', value: 'Adminstrativo'},
     {label: ' Civil', value: 'Civil'},
     {label: ' Consumidor', value: 'Consumidor'},
     {label: ' Contratual', value: 'Contratual'},
@@ -60,6 +61,7 @@ export default function CadastroAdvogado({navigation}) {
     {label: ' Empresarial', value: 'Empresarial'},
     {label: ' Estado', value: 'Estado'},
     {label: ' Penal', value: 'Penal'},
+    {label: ' Previdenciário', value: 'Previdenciário'},
     {label: ' Propriedade Intelectual', value: 'Propriedade Intelectual'},
     {label: ' Tecnologia da Informação', value: 'Tecnologia da Informação'},
     {label: ' Trabalhista', value: 'Trabalhista'},
@@ -106,6 +108,8 @@ export default function CadastroAdvogado({navigation}) {
       } else {
       // doc.data() will be undefined in this case
       alert("A conta logada no momento não é uma conta de advogado");
+      alert("Entre na área certa e saia da conta para poder cadastrar/logar em outra");
+      navigation.navigate("Cadastro")
       }
      } else {
        console.log("Não está logado")
