@@ -36,7 +36,11 @@ const ListaBusca = ({route,navigation}) => {
   const [listar, setListar] = useState();
   const [advogados, setAdvogados] = useState();
   const [clicado, setClicado] = useState (false);
-
+  const [infoAdvogado, setInfoAdvogado] = useState({
+    AdvogadoId: "", 
+    AdvogadoNome: "",
+    AdvogadoImagem: "",
+  })
 
   useEffect(async()=> {
     const db = getFirestore();
@@ -50,7 +54,6 @@ const ListaBusca = ({route,navigation}) => {
       })
       setAdvogados(data)
     })
-    console.log(advogados)
   },[])
 
 
@@ -82,6 +85,23 @@ const ListaBusca = ({route,navigation}) => {
     console.log(doc.id, " => ", doc.data());
   });}
   seila()
+
+  const nameTap = (AdvogadoImagem, AdvogadoNome, AdvogadoId) =>{
+    if(!AdvogadoImagem){
+      navigation.push("Chats",{
+      AdvogadoNome,
+      AdvogadoImagem: AdvogadoNome.charAt(0),
+      AdvogadoId,
+      })
+    }
+    else{
+      navigation.push("Chats",{
+      AdvogadoNome,
+      AdvogadoImagem,
+      AdvogadoId,
+      })
+    }
+  }
   return (
 
     <SafeAreaView style={styles.container}>
@@ -125,9 +145,11 @@ const ListaBusca = ({route,navigation}) => {
         borderTopColor:"#FFF",
         }}
         disabledStyle={{ opacity: 0.5 }}
-        pad={20}>
+        pad={20}
+        onPress={()=> nameTap(item.Imagem, item.Nome, item.id)}
+        >
+        
         <Avatar
-        activeOpacity={0.2}
         avatarStyle={{justifyContent: 'center'}}
         containerStyle={{ backgroundColor: "#BDBDBD" }}
         size="large"
@@ -136,8 +158,7 @@ const ListaBusca = ({route,navigation}) => {
           uri: item.Imagem
         }}
         title={item.Nome.charAt(0)}
-        titleStyle={{}}
-      />
+        />
       <ListItem.Content>
 
         <ListItem.Title>

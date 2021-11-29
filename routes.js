@@ -5,7 +5,7 @@ import Home from './src/telas/Main';
 import Perfil from './src/telas/Perfil';
 import PerfilAdvogado from './src/telas/PerfilAdvogado';
 import Buscar from './src/telas/Busca';
-import Chats from './src/telas/Chats';
+import ChatsBar from './src/telas/ChatsBar';
 import ChatsAdvogado from './src/telas/ChatsAdvogado';
 
 import {Feather} from '@expo/vector-icons';
@@ -49,7 +49,7 @@ export default function Routes(){
       />
       <Tab.Screen
         name="Chats"
-        component={Chats}
+        component={ChatsBar}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Feather name="message-square" color="#FFFFFF" size={size} />

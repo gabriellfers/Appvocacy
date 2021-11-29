@@ -13,6 +13,7 @@ import Perfil from './src/telas/Perfil';
 import PerfilAdvogado from './src/telas/PerfilAdvogado';
 import Home from './src/telas/Busca';
 import Chats from './src/telas/Chats';
+import ChatsBar from './src/telas/ChatsBar';
 import ChatsAdvogado from './src/telas/ChatsAdvogado';
 import ListaBusca from './src/telas/ListaBusca';
 
@@ -89,6 +90,11 @@ export default function App({  }){
         <Stack.Screen 
         name="Chats"
         component={Chats}
+        options={{headerTitle: (props) => <LogoGold  {...props}/>, headerShown: true}}
+        />
+        <Stack.Screen 
+        name="ChatsBar"
+        component={ChatsBar}
         options={{headerTitle: (props) => <LogoGold  {...props}/>, headerShown: true}}
         />
         <Stack.Screen 
