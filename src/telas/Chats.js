@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     input: {
-      width: "85vw",
+      width: 275,
       height: 40,
       borderStyle: "solid",
       borderColor: "#D49D3D",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#D49D3D",
       justifyContent: "center",
       alignItems: "center",
-      width: "12vw",
+      width: 50,
       height: 40,
       borderTopRightRadius: 20,
       borderBottomRightRadius: 20,
