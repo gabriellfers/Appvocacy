@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { View, Text, StyleSheet, InputField} from 'react-native';
 import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'; 
+import ChatBox from "../components/chatBox";
 
 const Chats = ({route,navigation}) => {
   const {params} = route;
@@ -27,7 +28,12 @@ const Chats = ({route,navigation}) => {
         inverted
         data={[1,2,3]}
         renderItem={({ item })=>(
-          <Text>{AdvogadoNome}</Text>
+          <ChatBox
+          msg={item.msg}
+          userId={item.sendBy}
+          img={item.Imagem}
+          onImgTap={()=> imgTap(item.Imagem)}
+          />
         )}
         />
       </Text>
@@ -36,7 +42,7 @@ const Chats = ({route,navigation}) => {
           placeholder="Escreva sua mensagem"
           numberOfLines={10}
           style={styles.input}
-          onChangeText={(text)=>handleOnChange(text)}
+         // onChangeText={(text)=>handleOnChange(text)}
       />
       <TouchableOpacity style={styles.btn}
       onPress={()=> handleSend}>
@@ -50,13 +56,12 @@ const Chats = ({route,navigation}) => {
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
-        backgroundColor: "#e6e6e6"
+      flex: 1,
+      backgroundColor: "#e6e6e6"
     },
     text:{
         fontSize: 25,
         fontWeight: 'bold',
-        textAlign: 'left'
     },
     Mensagem: {
       flexDirection: "row",
