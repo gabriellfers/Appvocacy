@@ -4,7 +4,7 @@ import { Card, CardItem } from "native-base";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAuth } from "firebase/auth";
 
-const ChatBox = ({ userId, msg, img, onImgTap }) => {
+const ChatBox = ({ userId, msg, AdvogadoImagem, onImgTap }) => {
   const auth = getAuth();
   const user = auth.currentUser;
   let isCurrentUser = userId === auth.lastNotifiedUid ? true : false;
@@ -22,15 +22,15 @@ const ChatBox = ({ userId, msg, img, onImgTap }) => {
           isCurrentUser && {
             borderTopLeftRadius: 20,
             borderTopRightRadius: 0,
-            backgroundColor: "grey",
+            backgroundColor: "#bfbfbf",
           },
         ]}
       >
-        /*{img ? (
+        /*{AdvogadoImagem ? (
           <CardItem cardBody>
             <TouchableOpacity onPress={onImgTap}>
               <Image
-                source={{ uri: img }}
+                source={{ uri: AdvogadoImagem }}
                 resizeMode="cover"
                 style={{ height: 200, width: 50 }}
               />

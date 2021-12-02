@@ -501,7 +501,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     btnLogout:{
-      backgroundColor: '#e13d3d',
+      backgroundColor: '#A1772F',
       width: 300,
       height: 40,
       alignItems: 'center',
@@ -510,7 +510,7 @@ const styles = StyleSheet.create({
       marginBottom: 10
       },
       btnExcluir:{
-        backgroundColor: '#4a0000',
+        backgroundColor: '#544732',
         width: 300,
         height: 40,
         alignItems: 'center',
@@ -518,7 +518,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         },     
       btnEditConfirm:{
-      backgroundColor: '#3D86D4',
+      backgroundColor: '#DBBA81',
       height: 30,
       width: 60,
       alignItems: 'center',
@@ -528,7 +528,7 @@ const styles = StyleSheet.create({
       marginBottom: 10
       },
       btn:{
-      backgroundColor: '#3D86D4',
+      backgroundColor: '#DBBA81',
       width: 300,
       height: 40,
       alignItems: 'center',
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
       marginBottom: 10
       },
       btnEditar:{
-        backgroundColor: '#3D86D4',
+        backgroundColor: '#DBBA81',
         height: 30,
         width: 60,
         alignItems: 'center',
@@ -547,7 +547,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
         },
       btnEditsair:{
-        backgroundColor: '#e13d3d',
+        backgroundColor: '#543E18',
         height: 30,
         width: 60,
         alignItems: 'center',

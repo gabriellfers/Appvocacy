@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { View, Text, StyleSheet, InputField} from 'react-native';
 import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'; 
-import ChatBox from "../components/chatBox";
+import {ChatBox} from "../components";
 
 const Chats = ({route,navigation}) => {
   const {params} = route;
@@ -31,7 +31,7 @@ const Chats = ({route,navigation}) => {
           <ChatBox
           msg={item.msg}
           userId={item.sendBy}
-          img={item.Imagem}
+          AdvogadoImagem={item.Imagem}
           onImgTap={()=> imgTap(item.Imagem)}
           />
         )}
