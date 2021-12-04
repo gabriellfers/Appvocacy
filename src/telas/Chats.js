@@ -1,6 +1,7 @@
 
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, Text, StyleSheet, InputField} from 'react-native';
+import { Card, CardItem, NativeBaseProvider } from "native-base";
 import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'; 
 import {ChatBox} from "../components";
@@ -21,7 +22,16 @@ const Chats = ({route,navigation}) => {
     })
   }, [navigation]);
 
+useEffect(()=>{
+  try{
+
+  } catch(error){
+    alert(error)
+  }
+},[])
+
   return (
+    <NativeBaseProvider>
     <View style = {styles.container}>
       <Text style = {styles.text}>
         <FlatList
@@ -51,6 +61,7 @@ const Chats = ({route,navigation}) => {
       
     </View>
     </View>
+    </NativeBaseProvider>
   );
 }
 
@@ -58,10 +69,6 @@ const styles = StyleSheet.create({
     container:{
       flex: 1,
       backgroundColor: "#e6e6e6"
-    },
-    text:{
-        fontSize: 25,
-        fontWeight: 'bold',
     },
     Mensagem: {
       flexDirection: "row",

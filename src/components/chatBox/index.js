@@ -12,7 +12,7 @@ const ChatBox = ({ userId, msg, AdvogadoImagem, onImgTap }) => {
     <Card
       transparent
       style={{
-        maxWidth: 80,
+        maxWidth: 160,
         alignSelf: isCurrentUser ? "flex-end" : "flex-start",
       }}
     >
@@ -26,7 +26,7 @@ const ChatBox = ({ userId, msg, AdvogadoImagem, onImgTap }) => {
           },
         ]}
       >
-        /*{AdvogadoImagem ? (
+        {AdvogadoImagem ? (
           <CardItem cardBody>
             <TouchableOpacity onPress={onImgTap}>
               <Image
@@ -42,7 +42,7 @@ const ChatBox = ({ userId, msg, AdvogadoImagem, onImgTap }) => {
           >
             {msg}
           </Text>
-        )}*/
+        )}
       </View>
     </Card>
   );
