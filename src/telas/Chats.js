@@ -22,13 +22,6 @@ const Chats = ({route,navigation}) => {
     })
   }, [navigation]);
 
-useEffect(()=>{
-  try{
-
-  } catch(error){
-    alert(error)
-  }
-},[])
 
   return (
     <NativeBaseProvider>
@@ -36,7 +29,8 @@ useEffect(()=>{
       <Text style = {styles.text}>
         <FlatList
         inverted
-        data={[1,2,3]}
+        items={[1,2,3]}
+        data={messages}
         renderItem={({ item })=>(
           <ChatBox
           msg={item.msg}
@@ -52,7 +46,6 @@ useEffect(()=>{
           placeholder="Escreva sua mensagem"
           numberOfLines={10}
           style={styles.input}
-         // onChangeText={(text)=>handleOnChange(text)}
       />
       <TouchableOpacity style={styles.btn}
       onPress={()=> handleSend}>
