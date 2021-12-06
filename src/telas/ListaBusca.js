@@ -37,9 +37,9 @@ const ListaBusca = ({route,navigation}) => {
   const [advogados, setAdvogados] = useState();
   const [clicado, setClicado] = useState (false);
   const [infoAdvogado, setInfoAdvogado] = useState({
-    AdvogadoId: "", 
-    AdvogadoNome: "",
-    AdvogadoImagem: "",
+    Id: "", 
+    Nome: "",
+    Imagem: "",
   })
 
   useEffect(async()=> {
@@ -86,19 +86,19 @@ const ListaBusca = ({route,navigation}) => {
   });}
   seila()
 
-  const nameTap = (AdvogadoImagem, AdvogadoNome, AdvogadoId) =>{
-    if(!AdvogadoImagem){
+  const nameTap = (Imagem, Nome, Id) =>{
+    if(!Imagem){
       navigation.push("Chats",{
-      AdvogadoNome,
-      AdvogadoImagem: AdvogadoNome.charAt(0),
-      AdvogadoId,
+      Nome,
+      Imagem: Nome.charAt(0),
+      Id,
       })
     }
     else{
       navigation.push("Chats",{
-      AdvogadoNome,
-      AdvogadoImagem,
-      AdvogadoId,
+      Nome,
+      Imagem,
+      Id,
       })
     }
   }

@@ -86,19 +86,19 @@ const ListaBusca = ({route,navigation}) => {
   });}
   seila()
 
-  const nameTap = (UserImagem, UserNome, UserId) =>{
-    if(!UserImagem){
+  const nameTap = (Imagem, Nome, Id) =>{
+    if(!Imagem){
       navigation.push("Chats",{
-      UserNome,
-      UserImagem: UserNome.charAt(0),
-      UserId,
+      Nome,
+      Imagem: Nome.charAt(0),
+      Id,
       })
     }
     else{
       navigation.push("Chats",{
-      UserNome,
-      UserImagem,
-      UserId,
+      Nome,
+      Imagem,
+      Id,
       })
     }
   }

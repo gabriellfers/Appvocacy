@@ -2,53 +2,76 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, Text, StyleSheet, InputField} from 'react-native';
 import { Card, CardItem, NativeBaseProvider } from "native-base";
+import { getAuth } from "firebase/auth";
+import { collection, addDoc, getFirestore, Timestamp } from "firebase/firestore";
 import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'; 
 import {ChatBox} from "../components";
 
 const Chats = ({route,navigation}) => {
   const {params} = route;
-  const {AdvogadoNome, AdvogadoImagem, textoImg, AdvogadoId, currentUserID} = params;
-  const [msgValue, setMsgValue] = useState('')
+  const db = getFirestore();
+  const {Nome, Imagem, textoImg, Id, currentUserID} = params;
+  const auth = getAuth();
+  const user1 = auth.currentUser.uid;
+  const user2 = Id
+  const [mensagem,setMensagem] = useState('')
   const [messages,setMessages] = useState([])
 
-  console.log(AdvogadoNome)
-  console.log(AdvogadoImagem)
-  console.log(AdvogadoId)
+  console.log(Nome)
+  console.log(Imagem)
+  console.log(Id)
+
+  console.log(user1)
+  console.log(user2)
 
   useLayoutEffect(()=>{
     navigation.setOptions({
-      headerTitle: <Text>{AdvogadoNome}</Text>
+      headerTitle: <Text>{Nome}</Text>
     })
   }, [navigation]);
 
 
+  const handleSubmit = async () => {
+
+    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+
+    let url;
+
+    await addDoc(collection(db, "messages", id, "chat"), {
+      text: mensagem,
+      from: user1,
+      to: user2,
+      createdAt: Timestamp.fromDate(new Date()),
+      media: url || "",
+    });
+
+    /*await setDoc(doc(db, "lastMsg", id), {
+      text,
+      from: user1,
+      to: user2,
+      createdAt: Timestamp.fromDate(new Date()),
+      media: url || "",
+      unread: true,
+    });*/
+
+    console.log(mensagem)
+    setMensagem("");
+  };
+  console.log(mensagem)
+
   return (
     <NativeBaseProvider>
     <View style = {styles.container}>
-      <Text style = {styles.text}>
-        <FlatList
-        inverted
-        items={[1,2,3]}
-        data={messages}
-        renderItem={({ item })=>(
-          <ChatBox
-          msg={item.msg}
-          userId={item.sendBy}
-          AdvogadoImagem={item.Imagem}
-          onImgTap={()=> imgTap(item.Imagem)}
-          />
-        )}
-        />
-      </Text>
     <View style={styles.enviar}>
       <TextInput
           placeholder="Escreva sua mensagem"
           numberOfLines={10}
+          onChangeText={mensagem => setMensagem(mensagem)}
           style={styles.input}
       />
       <TouchableOpacity style={styles.btn}
-      onPress={()=> handleSend}>
+      onPress={handleSubmit}>
         <Ionicons name="send" size={30} color="#FFF" />
       </TouchableOpacity>
       
