@@ -288,6 +288,9 @@ const AlterarImagem = ()=>{
       <TouchableOpacity style={styles.btnExcluir} onPress={()=> setModalExcluirVisible(true)}>
       <Text style={styles.textoLogin}>EXCLUIR CONTA</Text>
       </TouchableOpacity>  
+      <TouchableOpacity style={styles.btn} onPress={()=>{navigation.navigate("ListaBuscaAdvogado")}}>
+      <Text style={styles.textoLogin}>Chats</Text>
+      </TouchableOpacity>  
       </View>
     </Card>
     </View>

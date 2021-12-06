@@ -16,6 +16,7 @@ import Chats from './src/telas/Chats';
 import ChatsBar from './src/telas/ChatsBar';
 import ChatsAdvogado from './src/telas/ChatsAdvogado';
 import ListaBusca from './src/telas/ListaBusca';
+import ListaBuscaAdvogado from './src/telas/ListaBuscaAdvogado';
 
 
 const Stack = createStackNavigator();
@@ -105,6 +106,11 @@ export default function App({  }){
         <Stack.Screen 
         name="ListaBusca"
         component={ListaBusca}
+        options={{headerTitle: (props) => <LogoGold  {...props}/>, headerShown: true}}
+        />
+         <Stack.Screen 
+        name="ListaBuscaAdvogado"
+        component={ListaBuscaAdvogado}
         options={{headerTitle: (props) => <LogoGold  {...props}/>, headerShown: true}}
         />
 

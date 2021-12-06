@@ -5,7 +5,7 @@ export default function ChatsAdvogado() {
   return (
     <View style = {styles.container}>
       <Text style = {styles.text}>
-        TELA CHATS ADVOGADOS
+        Nenhum chat foi requisitado
       </Text>
     </View>
   );

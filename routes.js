@@ -5,6 +5,7 @@ import Home from './src/telas/Main';
 import Perfil from './src/telas/Perfil';
 import PerfilAdvogado from './src/telas/PerfilAdvogado';
 import Buscar from './src/telas/Busca';
+import ListaBuscaAdvogado from './src/telas/ListaBuscaAdvogado';
 import ChatsBar from './src/telas/ChatsBar';
 import ChatsAdvogado from './src/telas/ChatsAdvogado';
 
