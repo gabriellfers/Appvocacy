@@ -7,6 +7,7 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Modal,
   Text
 } from 'react-native';
 
@@ -32,6 +33,7 @@ import { render } from 'react-dom';
 import { InputLeftAddon } from 'native-base';
 
 const ListaBusca = ({route,navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const {tipoescolhido}=route.params;
   const [searchText, setSearchText] = useState('');
   const [listar, setListar] = useState();
@@ -147,7 +149,7 @@ const ListaBusca = ({route,navigation}) => {
         }}
         disabledStyle={{ opacity: 0.5 }}
         pad={20}
-        onPress={()=> nameTap(item.Imagem, item.Nome, item.id)}
+        onPress={() => setModalVisible(true)}
         >
         
         <Avatar
@@ -170,16 +172,107 @@ const ListaBusca = ({route,navigation}) => {
         <Text style={styles.tipo}> {item.Tipo} </Text>
         </ListItem.Subtitle>
       </ListItem.Content>
+
+      <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Iniciar chat com {item.Nome}?</Text>
+
+        <TouchableOpacity style={styles.btnEditConfirm}>
+        <Text style={styles.textoLogin} onPress={()=> {
+          setModalVisible(!modalVisible)
+          nameTap(item.Imagem, item.Nome, item.id
+          )}}>Sim</Text>
+        </TouchableOpacity> 
+
+        <TouchableOpacity style={styles.btnEditsair}>
+        <Text style={styles.textoLogin} onPress={
+          () => {
+            setModalVisible(!modalVisible)
+          }}>Não</Text>
+        </TouchableOpacity>   
+          </View>
+        </View>
+      </Modal>
+</View>
         </ListItem>
         </View>
       }
       />}
 
+
+      
+
     </SafeAreaView>
+
+    
+      
   );
 };
 
 const styles = StyleSheet.create({
+  modalText:{
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  modal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalView: {
+    position: 'absolute',
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  btnEditConfirm:{
+    backgroundColor: '#DBBA81',
+    height: 30,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 7,
+    marginTop: 10,
+    marginBottom: 10
+  },
+  btnEditsair:{
+    backgroundColor: '#543E18',
+    height: 30,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 7,
+    marginTop: 10,
+    marginBottom: 10
+  },
   container: {
     flex: 1,
   },

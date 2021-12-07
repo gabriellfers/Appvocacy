@@ -26,7 +26,7 @@ const Chats = ({route,navigation}) => {
   }, [navigation]);
 
 
-  const selectUser = async () => {
+  const selectUser = () => {
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
     const msgsRef = collection(db, "messages", id, "chat");

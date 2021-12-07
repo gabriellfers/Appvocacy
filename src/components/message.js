@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, StyleSheet } from "react";
 import Moment from "react-moment";
 
 const Message = ({ msgs, user1 }) => {
@@ -23,5 +23,7 @@ const Message = ({ msgs, user1 }) => {
     </div>
   );
 };
+
+
 
 export default Message;
