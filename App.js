@@ -1,4 +1,5 @@
 import React from 'react';
+import "./App.css"
 import 'react-native-gesture-handler';
 import { createStackNavigator } from "@react-navigation/stack";
 import { View, Text, Image } from 'react-native';

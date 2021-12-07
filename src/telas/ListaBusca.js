@@ -29,6 +29,7 @@ import { TouchableHighlight } from "react-native";
 import { MaterialCommunityIcons, Feather} from '@expo/vector-icons';
 import results from './results';
 import { render } from 'react-dom';
+import { InputLeftAddon } from 'native-base';
 
 const ListaBusca = ({route,navigation}) => {
   const {tipoescolhido}=route.params;

@@ -1,12 +1,12 @@
 
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { View, Text, StyleSheet, InputField} from 'react-native';
+import { View, ScrollView, Text, StyleSheet, InputField} from 'react-native';
 import { Card, CardItem, NativeBaseProvider } from "native-base";
 import { getAuth } from "firebase/auth";
-import { collection, addDoc, getFirestore, Timestamp } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, where, query, addDoc, getFirestore, Timestamp } from "firebase/firestore";
 import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'; 
-import {ChatBox} from "../components";
+import Message from "../components/Message";
 
 const Chats = ({route,navigation}) => {
   const {params} = route;
@@ -15,22 +15,38 @@ const Chats = ({route,navigation}) => {
   const auth = getAuth();
   const user1 = auth.currentUser.uid;
   const user2 = Id
+  const [textInput, setTextInput] = useState("");
   const [mensagem,setMensagem] = useState('')
-  const [messages,setMessages] = useState([])
-
-  console.log(Nome)
-  console.log(Imagem)
-  console.log(Id)
-
-  console.log(user1)
-  console.log(user2)
+  const [msgs,setMsgs] = useState([])
 
   useLayoutEffect(()=>{
     navigation.setOptions({
-      headerTitle: <Text>{Nome}</Text>
+      headerTitle: <Text>{user2.name}</Text>
     })
   }, [navigation]);
 
+
+  const selectUser = async () => {
+    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+
+    const msgsRef = collection(db, "messages", id, "chat");
+    const q = query(msgsRef, orderBy("createdAt", "asc"));
+
+    onSnapshot(q, (querySnapshot) => {
+      let msgs = [];
+      querySnapshot.forEach((doc) => {
+        msgs.push(doc.data());
+      });
+      setMsgs(msgs);
+    });
+    /* get last message b/w logged in user and selected user
+    const docSnap = await getDoc(doc(db, "lastMsg", id));
+    // if last message exists and message is from selected user
+    if (docSnap.data() && docSnap.data().from !== user1) {
+      // update last message doc, set unread to false
+      await updateDoc(doc(db, "lastMsg", id), { unread: false });
+    }*/
+  };
 
   const handleSubmit = async () => {
 
@@ -54,15 +70,23 @@ const Chats = ({route,navigation}) => {
       media: url || "",
       unread: true,
     });*/
-
-    console.log(mensagem)
     setMensagem("");
+
   };
-  console.log(mensagem)
+
+ selectUser()
+  //console.log(mensagem)
 
   return (
     <NativeBaseProvider>
     <View style = {styles.container}>
+      <div className="messages">
+        {msgs.length
+          ? msgs.map((msgs, i) => (
+            <Message key={i} msgs={msgs} user1={user1} />
+          ))
+        : null}
+      </div>
     <View style={styles.enviar}>
       <TextInput
           placeholder="Escreva sua mensagem"

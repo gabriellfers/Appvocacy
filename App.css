@@ -1,0 +1,39 @@
+.messages {
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+  border-bottom: 1px solid var(--color-6);
+}
+ .message_wrapper {
+    margin-top: 5px;
+    padding: 0px 5px;
+  }
+  .message_wrapper img {
+    width: 100%;
+    border-radius: 5px;
+  }
+  .message_wrapper p {
+    padding: 10px;
+    display: inline-block;
+    max-width: 50%;
+    text-align: left;
+    border-radius: 5px;
+  }
+  .message_wrapper small {
+    display: inline-block;
+    margin-top: 15px;
+    opacity: 0.8;
+  }
+  .message_wrapper.own {
+    text-align: right;
+  }
+  .me {
+    background: #D49D3D;
+    font-family: Calibri;
+    color: white;
+  }
+  .friend {
+    background: #be8d37;
+    font-family: Calibri;
+    color: white;
+  }
+  
