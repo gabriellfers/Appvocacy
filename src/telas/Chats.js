@@ -1,6 +1,6 @@
 
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, InputField} from 'react-native';
+import { View, ScrollView, Text, StyleSheet, InputField } from 'react-native';
 import { Card, CardItem, NativeBaseProvider } from "native-base";
 import { getAuth } from "firebase/auth";
 import { collection, onSnapshot, orderBy, where, query, addDoc, getFirestore, Timestamp } from "firebase/firestore";
@@ -18,16 +18,23 @@ const Chats = ({route,navigation}) => {
   const [textInput, setTextInput] = useState("");
   const [mensagem,setMensagem] = useState('')
   const [msgs,setMsgs] = useState([])
+  const [id, setId ] = useState(user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`)
 
   useLayoutEffect(()=>{
     navigation.setOptions({
       headerTitle: <Text>{user2.name}</Text>
     })
   }, [navigation]);
-
+  
+  useEffect(() => {
+    setTimeout(() => {
+      selectUser()
+    }, 1000);
+  }, []);
+    
 
   const selectUser = () => {
-    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+   
 
     const msgsRef = collection(db, "messages", id, "chat");
     const q = query(msgsRef, orderBy("createdAt", "asc"));
@@ -39,6 +46,8 @@ const Chats = ({route,navigation}) => {
       });
       setMsgs(msgs);
     });
+
+    console.log('foi')
     /* get last message b/w logged in user and selected user
     const docSnap = await getDoc(doc(db, "lastMsg", id));
     // if last message exists and message is from selected user
@@ -48,19 +57,20 @@ const Chats = ({route,navigation}) => {
     }*/
   };
 
-  const handleSubmit = async () => {
-
-    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
-
+  const handleSubmit = () => {
+    console.log('inicio submmit')
     let url;
+    try{
+      addDoc(collection(db, "messages", id, "chat"), {
+       text: mensagem,
+       from: user1,
+       to: user2,
+       createdAt: Timestamp.fromDate(new Date()),
+     });
+    }catch(e){
+      console.log(e)
+    }
 
-    await addDoc(collection(db, "messages", id, "chat"), {
-      text: mensagem,
-      from: user1,
-      to: user2,
-      createdAt: Timestamp.fromDate(new Date()),
-      media: url || "",
-    });
 
     /*await setDoc(doc(db, "lastMsg", id), {
       text,
@@ -70,12 +80,13 @@ const Chats = ({route,navigation}) => {
       media: url || "",
       unread: true,
     });*/
-    setMensagem("");
+    //setMensagem("");
+
+    console.log('fim submit')
 
   };
 
- selectUser()
-  //console.log(mensagem)
+//  selectUser()
 
   return (
     <NativeBaseProvider>
@@ -94,8 +105,7 @@ const Chats = ({route,navigation}) => {
           onChangeText={mensagem => setMensagem(mensagem)}
           style={styles.input}
       />
-      <TouchableOpacity style={styles.btn}
-      onPress={handleSubmit}>
+      <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
         <Ionicons name="send" size={30} color="#FFF" />
       </TouchableOpacity>
       

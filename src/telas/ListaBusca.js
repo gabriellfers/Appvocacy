@@ -149,7 +149,7 @@ const ListaBusca = ({route,navigation}) => {
         }}
         disabledStyle={{ opacity: 0.5 }}
         pad={20}
-        onPress={() => setModalVisible(true)}
+        onPress={() => nameTap(item.Imagem, item.Nome, item.id)}
         >
         
         <Avatar
