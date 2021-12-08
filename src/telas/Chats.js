@@ -1,17 +1,18 @@
 
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, InputField } from 'react-native';
-import { Card, CardItem, NativeBaseProvider } from "native-base";
+import { Card, CardItem, NativeBaseProvider, TextArea } from "native-base";
 import { getAuth } from "firebase/auth";
 import { collection, onSnapshot, orderBy, where, query, addDoc, getFirestore, Timestamp } from "firebase/firestore";
 import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'; 
-import Message from "../components/Message";
+import Message from "../components/message";
+import { Avatar } from "react-native-elements";
 
 const Chats = ({route,navigation}) => {
   const {params} = route;
   const db = getFirestore();
-  const {Nome, Imagem, textoImg, Id, currentUserID} = params;
+  const {Nome, Imagem, Id} = params;
   const auth = getAuth();
   const user1 = auth.currentUser.uid;
   const user2 = Id
@@ -20,11 +21,29 @@ const Chats = ({route,navigation}) => {
   const [msgs,setMsgs] = useState([])
   const [id, setId ] = useState(user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`)
 
+  function Avatar2(){
+    return(
+      <Avatar
+      avatarStyle={{justifyContent: 'center'}}
+      containerStyle={{ backgroundColor: "#BDBDBD" }}
+      size="medium"
+      rounded
+      source={{
+        uri: Imagem
+      }}
+      title={Nome.charAt(0)}
+      />
+    )
+  }
+
   useLayoutEffect(()=>{
-    navigation.setOptions({
-      headerTitle: <Text>{user2.name}</Text>
-    })
-  }, [navigation]);
+    navigation.setOptions({ headerTitle: (props) => (
+      <>
+        <Avatar2  {...props}/> <Text style={styles.Texto}>{Nome} </Text>
+      </>
+    )})
+  })
+
   
   useEffect(() => {
     setTimeout(() => {
@@ -99,7 +118,7 @@ const Chats = ({route,navigation}) => {
         : null}
       </div>
     <View style={styles.enviar}>
-      <TextInput
+      <TextArea
           placeholder="Escreva sua mensagem"
           numberOfLines={10}
           onChangeText={mensagem => setMensagem(mensagem)}
@@ -119,6 +138,10 @@ const styles = StyleSheet.create({
     container:{
       flex: 1,
       backgroundColor: "#e6e6e6"
+    },
+    Texto:{
+      fontSize: 18,
+      fontWeight: 'bold',
     },
     Mensagem: {
       flexDirection: "row",
@@ -143,8 +166,10 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       top: 0,
       backgroundColor: "#FFF",
-      borderTopLeftRadius: 20,
-      borderBottomLeftRadius: 20,
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: 0,
+      borderTopLeftRadius: 10,
+      borderBottomLeftRadius: 10,
       padding: 5
     },
     btn: {
@@ -158,8 +183,10 @@ const styles = StyleSheet.create({
       alignItems: "center",
       width: 50,
       height: 40,
-      borderTopRightRadius: 20,
-      borderBottomRightRadius: 20,
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
+      borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
     },
 })
 
