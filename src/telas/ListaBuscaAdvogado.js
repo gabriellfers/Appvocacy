@@ -50,7 +50,7 @@ const [selected, setSelected] = useState(0);
 
   useEffect(async()=> {
     const db = getFirestore();
-    var vquery = query(collection(db,'info-user'))
+    var vquery = query(collection(db,'info-user'), where('Nome','==', '3DS'))
     var data = []
     getDocs(vquery).then(resultados=>{
       resultados.forEach(doc=>{

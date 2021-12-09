@@ -257,7 +257,7 @@ const AlterarImagem = ()=>{
         <Text>
         <Feather name="menu" color="#FFFFFF" size={25} />
         </Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>  */}
 
     
     <ListItem
@@ -539,7 +539,7 @@ const styles = StyleSheet.create({
       width:60,
       height:60,
       right: 20,
-      top: -10,
+      bottom: 0,
       zIndex: 100,
       borderRadius: 50,
       justifyContent: 'center',
@@ -652,7 +652,6 @@ const styles = StyleSheet.create({
         elevation: 5
       },
       modalViewc: {
-        height:(dHeight - 50),
         position: 'absolute',
         marginLeft: 20,
         marginRight: 20,

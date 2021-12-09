@@ -119,7 +119,7 @@ export default function Login({navigation}) {
       <TextInput 
         style={styles.inputEmail}
         autoCorrect = {false}
-        placeholder = "Email ou OAB"
+        placeholder = "Email"
         onChangeText={ email => setEmail(email) }  
       />
 
@@ -182,13 +182,13 @@ const styles = StyleSheet.create({
 
   inputEmail:{
     backgroundColor: '#FFF',
-    width: (dWidth - 60),
-    marginBottom: 15,
-    height: 48,
-    color:'#000000',
-    fontSize: 17,
-    borderRadius: 7,
-    padding: 10
+      width: (dWidth - 60),
+      marginBottom: 10,
+      color:'#000000',
+      fontSize: 17,
+      borderRadius: 7,
+      height: 48,
+      padding: 10
   },
 
   btnLogin:{
@@ -225,8 +225,8 @@ inputsenha:{
   backgroundColor: '#FFF',
   width: (dWidth - 100),
   marginBottom: 10,
-  height: 48,
   color:'#000000',
+  height: 48,
   fontSize: 17,
   borderTopRightRadius: 0,
   borderBottomRightRadius: 0,

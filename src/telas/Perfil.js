@@ -635,7 +635,6 @@ const styles = StyleSheet.create({
         elevation: 5
       },
       modalViewc: {
-        height: (dHeight - 50),
         position: 'absolute',
         margin: 20,
         backgroundColor: "#FFFFFF",

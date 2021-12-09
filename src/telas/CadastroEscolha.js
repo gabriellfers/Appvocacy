@@ -40,11 +40,11 @@ console.log(user)
       <View style = {styles.container}>
 
       <TouchableOpacity style={styles.btnCadastroCliente} onPress={()=>{navigation.navigate('CadastroCliente')}}>
-        <Text style={styles.textoButton} >Cadastrar Cliente</Text>
+        <Text style={styles.textoButton} >Cliente</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.btnCadastroAdvogado} onPress={()=>{navigation.navigate('CadastroAdvogado')}}>
-        <Text style={styles.textoButton} >Cadastrar Advogado</Text>
+        <Text style={styles.textoButton} >Advogado</Text>
       </TouchableOpacity>
 
       </View>
