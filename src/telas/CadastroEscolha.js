@@ -2,17 +2,32 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import { 
+  getAuth,
+} from "firebase/auth"
+
+import { 
 View, 
 Text, 
 Image,
 StyleSheet,
 ScrollView,
-TouchableOpacity
+TouchableOpacity,
+Dimensions
 } from 'react-native';
+require ("./../../firebaseConfig.js")
 
 import logo from './../assets/logo.png';
 
+const dHeight = Dimensions.get('window').height
+const dWidth = Dimensions.get('window').width
+
+
 export default function Cadastro({navigation}) {
+
+  const auth = getAuth();
+const user = auth.currentUser;
+
+console.log(user)
   return (
     <ScrollView style = {styles.fundo}>
       <View style={styles.container}>
@@ -67,7 +82,7 @@ const styles = StyleSheet.create({
 
     btnCadastroCliente:{
       backgroundColor: '#D49D3D',
-      width: '75%',
+      width: (dWidth - 60),
       height: 40,
       alignItems: 'center',
       justifyContent: 'center',
@@ -77,7 +92,7 @@ const styles = StyleSheet.create({
 
     btnCadastroAdvogado:{
       backgroundColor: '#D49D3D',
-      width: '75%',
+      width: (dWidth - 60),
       height: 40,
       alignItems: 'center',
       justifyContent: 'center',

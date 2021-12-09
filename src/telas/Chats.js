@@ -1,13 +1,16 @@
 
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, InputField } from 'react-native';
-import { Card, CardItem, NativeBaseProvider, TextArea } from "native-base";
+import { View, ScrollView, Text, StyleSheet, InputField, Dimensions } from 'react-native';
+import { Card, CardItem, Center, NativeBaseProvider, TextArea } from "native-base";
 import { getAuth } from "firebase/auth";
 import { collection, onSnapshot, orderBy, where, query, addDoc, getFirestore, Timestamp } from "firebase/firestore";
 import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'; 
 import Message from "../components/message";
 import { Avatar } from "react-native-elements";
+
+const dHeight = Dimensions.get('window').height
+const dWidth = Dimensions.get('window').width
 
 const Chats = ({route,navigation}) => {
   const {params} = route;
@@ -25,7 +28,7 @@ const Chats = ({route,navigation}) => {
     return(
       <Avatar
       avatarStyle={{justifyContent: 'center'}}
-      containerStyle={{ backgroundColor: "#BDBDBD" }}
+      containerStyle={{ backgroundColor: "#BDBDBD"}}
       size="medium"
       rounded
       source={{
@@ -39,7 +42,8 @@ const Chats = ({route,navigation}) => {
   useLayoutEffect(()=>{
     navigation.setOptions({ headerTitle: (props) => (
       <>
-        <Avatar2  {...props}/> <Text style={styles.Texto}>{Nome} </Text>
+      <Avatar2  {...props}/> 
+      <Text style={styles.Texto}>{Nome} </Text>
       </>
     )})
   })
@@ -47,14 +51,12 @@ const Chats = ({route,navigation}) => {
   
   useEffect(() => {
     setTimeout(() => {
-      selectUser()
+      receberMsg()
     }, 1000);
   }, []);
     
 
-  const selectUser = () => {
-   
-
+  const receberMsg = () => {
     const msgsRef = collection(db, "messages", id, "chat");
     const q = query(msgsRef, orderBy("createdAt", "asc"));
 
@@ -67,18 +69,14 @@ const Chats = ({route,navigation}) => {
     });
 
     console.log('foi')
-    /* get last message b/w logged in user and selected user
-    const docSnap = await getDoc(doc(db, "lastMsg", id));
-    // if last message exists and message is from selected user
-    if (docSnap.data() && docSnap.data().from !== user1) {
-      // update last message doc, set unread to false
-      await updateDoc(doc(db, "lastMsg", id), { unread: false });
-    }*/
   };
 
   const handleSubmit = () => {
     console.log('inicio submmit')
-    let url;
+    if(mensagem==""){
+      alert("Você deve digitar algo para poder enviar")
+    }
+    else{
     try{
       addDoc(collection(db, "messages", id, "chat"), {
        text: mensagem,
@@ -86,48 +84,40 @@ const Chats = ({route,navigation}) => {
        to: user2,
        createdAt: Timestamp.fromDate(new Date()),
      });
+     receberMsg()
     }catch(e){
       console.log(e)
     }
-
-
-    /*await setDoc(doc(db, "lastMsg", id), {
-      text,
-      from: user1,
-      to: user2,
-      createdAt: Timestamp.fromDate(new Date()),
-      media: url || "",
-      unread: true,
-    });*/
-    //setMensagem("");
-
+    setMensagem("")
+  }
     console.log('fim submit')
+    
 
   };
 
-//  selectUser()
+//  receberMsg()
 
   return (
     <NativeBaseProvider>
     <View style = {styles.container}>
-      <div className="messages">
-        {msgs.length
-          ? msgs.map((msgs, i) => (
+      <View style={styles.messages}>
+        <ScrollView>
+      {msgs.map((msgs, i) => (
             <Message key={i} msgs={msgs} user1={user1} />
-          ))
-        : null}
-      </div>
+         ))}
+         </ScrollView>
+      </View>
     <View style={styles.enviar}>
-      <TextArea
+      <TextInput
           placeholder="Escreva sua mensagem"
           numberOfLines={10}
           onChangeText={mensagem => setMensagem(mensagem)}
+          value={mensagem}
           style={styles.input}
       />
       <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
         <Ionicons name="send" size={30} color="#FFF" />
       </TouchableOpacity>
-      
     </View>
     </View>
     </NativeBaseProvider>
@@ -142,6 +132,10 @@ const styles = StyleSheet.create({
     Texto:{
       fontSize: 18,
       fontWeight: 'bold',
+      position: 'absolute',
+      top: (Dimensions.get('window').height - (Dimensions.get('window').height - 15)) ,
+      left: 60,
+      width: 1000
     },
     Mensagem: {
       flexDirection: "row",
@@ -159,7 +153,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     input: {
-      width: 275,
+      width: (dWidth - 100),
       height: 40,
       borderStyle: "solid",
       borderColor: "#D49D3D",
@@ -188,6 +182,10 @@ const styles = StyleSheet.create({
       borderTopRightRadius: 10,
       borderBottomRightRadius: 10,
     },
+    messages:{
+      height: (dHeight - 135),
+      overflow: 'scroll'
+    }
 })
 
 export default Chats;

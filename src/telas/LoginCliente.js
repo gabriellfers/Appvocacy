@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
 View, 
@@ -7,7 +7,8 @@ StyleSheet,
 Text, 
 TextInput,
 TouchableOpacity,
-Image
+Image,
+Dimensions
 } from 'react-native';
 
 import { 
@@ -26,6 +27,9 @@ import {
   doc,
   getFirestore
 } from "firebase/firestore";
+
+const dHeight = Dimensions.get('window').height
+const dWidth = Dimensions.get('window').width
 
 
 export default function Login({navigation}) {
@@ -58,6 +62,7 @@ export default function Login({navigation}) {
       .then((userCredential) => {
         const user = userCredential.user;
         alert("Logado")
+        navigation.navigate("Perfil")
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -89,7 +94,11 @@ export default function Login({navigation}) {
   }
 
 
-  Verificar();
+  useEffect(() => {
+    setTimeout(() => {
+      Verificar()
+    }, 1000);
+  }, []);
 
   return (
     <ScrollView style={styles.fundo}>
@@ -158,6 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 100,
     justifyContent: 'center',
+    marginBottom: 20
   },
 
   container:{
@@ -169,7 +179,7 @@ const styles = StyleSheet.create({
 
   inputEmail:{
     backgroundColor: '#FFF',
-    width: 300,
+    width: (dWidth - 60),
     marginBottom: 15,
     color:'#000000',
     fontSize: 17,
@@ -179,7 +189,7 @@ const styles = StyleSheet.create({
 
   btnLogin:{
     backgroundColor: '#D49D3D',
-    width: '75%',
+    width: (dWidth - 60),
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
@@ -209,7 +219,7 @@ const styles = StyleSheet.create({
 },
 inputsenha:{
   backgroundColor: '#FFF',
-  width: 260,
+  width: (dWidth - 100),
   marginBottom: 10,
   color:'#000000',
   fontSize: 17,

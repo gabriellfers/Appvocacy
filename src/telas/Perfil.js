@@ -12,14 +12,16 @@ import {
   ScrollView,
   TextInput,
   Modal,
-  Promise
+  Promise,
+  Dimensions
   
 } from 'react-native';
 import { 
   getFirestore,
   doc,
   getDoc,
-  setDoc
+  setDoc,
+  deleteDoc
 } from "firebase/firestore";
 import { 
   getAuth,
@@ -38,6 +40,9 @@ import {
 } from "react-native-elements";
 
 import { TouchableHighlight } from "react-native";
+
+const dHeight = Dimensions.get('window').height
+const dWidth = Dimensions.get('window').width
 
 
 export default function Perfil({navigation}) {
@@ -163,13 +168,13 @@ alert("Dados alterados com sucesso!!!")
 
 const AlterarImagem = ()=>{
   const auth = getAuth()
-  console.log(auth.lastNotifiedUid)
+  const user = auth.currentUser;
   if(vImagem == null){
   alert("Preencha todos os campos")
   }
   else{
   console.log(vImagem)
-    setDoc(doc(db, "info-user", auth.lastNotifiedUid), {
+    setDoc(doc(db, "info-user", user.uid), {
     CPF: TextoCPF,
     DataNascimnto: TextoData,
     Nome: TextoNome,
@@ -183,6 +188,8 @@ const AlterarImagem = ()=>{
   const ExcluirConta = ()=>{
   const auth = getAuth();
   const user = auth.currentUser;
+
+  deleteDoc(doc(db, "info-user", auth.currentUser.uid));
 
   deleteUser(user).then(() => {
   // User deleted.
@@ -351,12 +358,12 @@ const AlterarImagem = ()=>{
         onChangeText={ nascimento => setData(nascimento) }  
       />
 
-        <TouchableOpacity style={styles.btnEditConfirm}>
-        <Text style={styles.textoLogin} onPress={AlterarDados}>Alterar</Text>
+        <TouchableOpacity style={styles.btnEditConfirm} onPress={AlterarDados}>
+        <Text style={styles.textoLogin} >Alterar</Text>
         </TouchableOpacity> 
 
-        <TouchableOpacity style={styles.btnEditsair}>
-        <Text style={styles.textoLogin} onPress={() => setModalVisible(!modalVisible)}>Fechar</Text>
+        <TouchableOpacity style={styles.btnEditsair} onPress={() => setModalVisible(!modalVisible)}>
+        <Text style={styles.textoLogin}>Fechar</Text>
         </TouchableOpacity>   
           </View>
         </View>
@@ -386,17 +393,13 @@ const AlterarImagem = ()=>{
        onChangeText={ imagem => setImagem(imagem) }  
       />
 
-        <TouchableOpacity style={styles.btnEditConfirm}>
-        <Text style={styles.textoLogin} onPress={AlterarImagem}>Alterar</Text>
+        <TouchableOpacity style={styles.btnEditConfirm}onPress={AlterarImagem}>
+        <Text style={styles.textoLogin}>Alterar</Text>
         </TouchableOpacity> 
 
-        <TouchableOpacity style={styles.btnEditsair}>
-        <Text style={styles.textoLogin} onPress={
-          () => {
-            setModalImagemVisible(!modalImagemVisible)
-            setImagem("");
-          }}>Fechar</Text>
-        </TouchableOpacity>   
+        <TouchableOpacity style={styles.btnEditsair} onPress={() => {setModalImagemVisible(!modalImagemVisible), setImagem("");}}>
+        <Text style={styles.textoLogin}>Fechar</Text>
+        </TouchableOpacity>  
           </View>
         </View>
       </Modal>
@@ -416,16 +419,13 @@ const AlterarImagem = ()=>{
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Você realmente deseja excluir sua conta?</Text>
 
-        <TouchableOpacity style={styles.btnEditConfirm}>
-        <Text style={styles.textoLogin} onPress={ExcluirConta}>Sim</Text>
+        <TouchableOpacity style={styles.btnEditConfirm} onPress={ExcluirConta}>
+        <Text style={styles.textoLogin}>Sim</Text>
         </TouchableOpacity> 
 
-        <TouchableOpacity style={styles.btnEditsair}>
-        <Text style={styles.textoLogin} onPress={
-          () => {
-            setModalExcluirVisible(!modalExcluirVisible)
-          }}>Não</Text>
-        </TouchableOpacity>   
+        <TouchableOpacity style={styles.btnEditsair} onPress={() => {setModalExcluirVisible(!modalExcluirVisible)}}>
+        <Text style={styles.textoLogin}>Não</Text>
+        </TouchableOpacity>    
           </View>
         </View>
       </Modal>
@@ -453,16 +453,13 @@ const AlterarImagem = ()=>{
        onChangeText={ email => setTEmail(email) }  
       />
 
-        <TouchableOpacity style={styles.btnEditConfirm}>
-        <Text style={styles.textoLogin} onPress={AlterarEmail}>Alterar</Text>
+        <TouchableOpacity style={styles.btnEditConfirm} onPress={AlterarEmail}>
+        <Text style={styles.textoLogin}>Alterar</Text>
         </TouchableOpacity> 
 
-        <TouchableOpacity style={styles.btnEditsair}>
-        <Text style={styles.textoLogin} onPress={
-          () => {
-            setModalEmailVisible(!modalEmailVisible)
-          }}>Fechar</Text>
-        </TouchableOpacity>   
+        <TouchableOpacity style={styles.btnEditsair} onPress={() => {setModalEmailVisible(!modalEmailVisible)}}>
+        <Text style={styles.textoLogin}>Fechar</Text>
+        </TouchableOpacity>     
           </View>
         </View>
       </Modal>
@@ -500,9 +497,18 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold'
     },
+    btn:{
+      backgroundColor: '#DBBA81',
+      width: (dWidth - 100),
+      height: 40,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 7,
+      marginBottom: 10
+      },
     btnLogout:{
       backgroundColor: '#A1772F',
-      width: 300,
+      width: (dWidth - 100),
       height: 40,
       alignItems: 'center',
       justifyContent: 'center',
@@ -511,7 +517,7 @@ const styles = StyleSheet.create({
       },
       btnExcluir:{
         backgroundColor: '#544732',
-        width: 300,
+        width: (dWidth - 100),
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
@@ -519,27 +525,18 @@ const styles = StyleSheet.create({
         },     
       btnEditConfirm:{
       backgroundColor: '#DBBA81',
-      height: 30,
-      width: 60,
+      height: 40,
+      width: (dWidth - 100),
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 7,
       marginTop: 10,
       marginBottom: 10
       },
-      btn:{
-      backgroundColor: '#DBBA81',
-      width: 300,
-      height: 40,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 7,
-      marginBottom: 10
-      },
       btnEditar:{
         backgroundColor: '#DBBA81',
-        height: 30,
-        width: 60,
+        height: 40,
+        width: 50,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 7,
@@ -548,8 +545,8 @@ const styles = StyleSheet.create({
         },
       btnEditsair:{
         backgroundColor: '#543E18',
-        height: 30,
-        width: 60,
+        height: 40,
+        width: (dWidth - 100),
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 7,
@@ -590,7 +587,7 @@ const styles = StyleSheet.create({
       },
       inputs:{
         backgroundColor: '#FFFFFF',
-        width: 300,
+        width: (dWidth - 100),
         marginBottom: 10,
         color:'#000000',
         fontSize: 17,

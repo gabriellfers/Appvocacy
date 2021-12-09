@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { 
   TextInputMask 
@@ -13,7 +13,8 @@ Text,
 TextInput,
 TouchableOpacity,
 Image,
-ScrollView
+ScrollView,
+Dimensions
 } from 'react-native';
 
 import { 
@@ -31,14 +32,15 @@ import {
 
 require ("../../firebaseConfig.js")
 
-
 import { Ionicons } from '@expo/vector-icons';
 import logo from './../assets/logo.png';
 import { setEnabled } from 'react-native/Libraries/Performance/Systrace';
 
+const dHeight = Dimensions.get('window').height
+const dWidth = Dimensions.get('window').width
+
+
 export default function CadastroAdvogado({navigation}) {
-    
-    
     DropDownPicker.setListMode("MODAL");
     const db = getFirestore();
     const [email, setEmail] = useState('');
@@ -95,7 +97,7 @@ export default function CadastroAdvogado({navigation}) {
   
 
 
-      const Verificar = async ()=>{
+      const VerificarA = async ()=>{
       const auth = getAuth();
       onAuthStateChanged(auth, async (user) => {
      if (user) {
@@ -117,9 +119,12 @@ export default function CadastroAdvogado({navigation}) {
      });
     }
 
-
-    Verificar();
-
+    useEffect(() => {
+      setTimeout(() => {
+        VerificarA()
+      }, 1000);
+    }, []);
+    
     return(
 
     <ScrollView style={styles.fundo}>
@@ -304,20 +309,34 @@ export default function CadastroAdvogado({navigation}) {
     },
     
     inputs:{
-        backgroundColor: '#FFF',
-        width: 300,
-        marginBottom: 10,
-        color:'#000000',
-        fontSize: 17,
-        borderRadius: 7,
-        paddingRight: 0,
-        paddingLeft: 0,
-        padding: 10
-    },
+      backgroundColor: '#FFF',
+      width: (dWidth - 60),
+      marginBottom: 10,
+      color:'#000000',
+      fontSize: 17,
+      borderRadius: 7,
+      paddingRight: 0,
+      paddingLeft: 0,
+      padding: 10
+  },
+
+  inputsenha:{
+      backgroundColor: '#FFF',
+      width: (dWidth - 100),
+      marginBottom: 10,
+      color:'#000000',
+      fontSize: 17,
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: 0,
+      borderRadius: 7,
+      paddingRight: 0,
+      paddingLeft: 0,
+      padding: 10
+  },
 
     inputipo:{
       backgroundColor: '#FFF',
-      width: 300,
+      width: (dWidth - 60),
       color:'#000000',
       fontSize: 17,
       borderRadius: 7,
@@ -325,17 +344,6 @@ export default function CadastroAdvogado({navigation}) {
       paddingLeft: 0,
       padding: 5
   },
-
-    inputsenha:{
-        backgroundColor: '#FFF',
-        width: 260,
-        marginBottom: 10,
-        color:'#000000',
-        fontSize: 17,
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
-        borderRadius: 7,
-    },
 
     areaInputSenha:{
         flexDirection: 'row',
@@ -345,7 +353,7 @@ export default function CadastroAdvogado({navigation}) {
 
     btnCadastrar:{
         backgroundColor: '#D49D3D',
-        width: 150,
+        width: (dWidth - 60),
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',

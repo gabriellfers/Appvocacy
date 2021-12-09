@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { 
 TextInputMask 
@@ -11,7 +11,8 @@ Text,
 TextInput,
 TouchableOpacity,
 Image,
-ScrollView
+ScrollView,
+Dimensions
 } from 'react-native';
 
 import { 
@@ -29,12 +30,19 @@ import {
 
 require ("./../../firebaseConfig.js")
 
-
 import { Ionicons } from '@expo/vector-icons';
 import logo from './../assets/logo.png';
 
+const dHeight = Dimensions.get('window').height
+const dWidth = Dimensions.get('window').width
+
+
 export default function CadastroCliente({navigation}) {
-    
+  const auth = getAuth();
+  const user = auth.currentUser;
+  
+  console.log(user)
+
     const db = getFirestore();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -68,7 +76,7 @@ export default function CadastroCliente({navigation}) {
           })
         };
     
-        const Verificar = async ()=>{
+        const VerificarC = async ()=>{
           const auth = getAuth();
           onAuthStateChanged(auth, async (user) => {
          if (user) {
@@ -90,8 +98,11 @@ export default function CadastroCliente({navigation}) {
          });
         }
     
-    
-        Verificar();
+    useEffect(() => {
+      setTimeout(() => {
+        VerificarC()
+      }, 1000);
+    }, []);
     return(
 
     <ScrollView style={styles.fundo}>
@@ -205,7 +216,7 @@ export default function CadastroCliente({navigation}) {
     
     inputs:{
         backgroundColor: '#FFF',
-        width: 300,
+        width: (dWidth - 60),
         marginBottom: 10,
         color:'#000000',
         fontSize: 17,
@@ -217,7 +228,7 @@ export default function CadastroCliente({navigation}) {
 
     inputsenha:{
         backgroundColor: '#FFF',
-        width: 260,
+        width: (dWidth - 100),
         marginBottom: 10,
         color:'#000000',
         fontSize: 17,
@@ -237,7 +248,7 @@ export default function CadastroCliente({navigation}) {
 
     btnCadastrar:{
         backgroundColor: '#D49D3D',
-        width: 150,
+        width: (dWidth - 60),
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',

@@ -71,7 +71,7 @@ const Buscar = ({navigation}) => {
       }} onPress={() => navigation.push('ListaBusca', {
         tipoescolhido:"Consumidor"
       })}>
-      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="shopping-cart" size={20} color="#FFF" />    Direito Consumidor</Text>
+      <Text style={{fontSize:20, color:"#FFF"}}><FontAwesome name="shopping-cart" size={20} color="#FFF" />    Direito do Consumidor</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={{

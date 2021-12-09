@@ -27,18 +27,16 @@ import {
 } from "react-native-elements";
 
 import { TouchableHighlight } from "react-native";
-import { MaterialCommunityIcons, Feather} from '@expo/vector-icons';
-import results from './results';
-import { render } from 'react-dom';
-import { InputLeftAddon } from 'native-base';
+
 
 const ListaBusca = ({route,navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const {tipoescolhido}=route.params;
   const [searchText, setSearchText] = useState('');
-  const [listar, setListar] = useState();
+  const [listar, setListar] = useState(0);
   const [advogados, setAdvogados] = useState();
   const [clicado, setClicado] = useState (false);
+  const [q, setQ] = useState ();
   const [infoAdvogado, setInfoAdvogado] = useState({
     Id: "", 
     Nome: "",
@@ -62,21 +60,22 @@ const ListaBusca = ({route,navigation}) => {
 
   const handleOrderClick = () => {
     let newList = [...advogados];
+    const db = getFirestore();
+
 
       
     if(listar==0){
-      setAdvogados(newList.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0)))
       setListar(1)
       console.log("crescente")
     }
     else{
-      setAdvogados(newList.sort((a, b) => (a.name < b.name ? 1 : b.name < a.name ? -1 : 0)))
       setListar(0)
       console.log("decrescente")
     }
     //setList(newList);
 
     console.log(listar)
+    console.log(q)
   };
 
 
@@ -109,29 +108,8 @@ const ListaBusca = ({route,navigation}) => {
 
     <SafeAreaView style={styles.container}>
       
-      <View style={styles.searchArea}>
-        <TextInput
-          style={styles.input}
-          placeholder= "Pesquise"
-          placeholderTextColor="#888"
-          value={searchText}
-          onChangeText={(t) => setSearchText(t)}
-        />
-
-        <TouchableOpacity style={StyleSheet.botao} onPress={()=>{
-          setClicado(!clicado)
-          handleOrderClick()
-        }
-          } style={styles.orderButton}>
-          
-          {clicado ?
-            <MaterialCommunityIcons name="order-alphabetical-ascending" size={40} color="#888"/>
-            :
-            <MaterialCommunityIcons name="order-alphabetical-descending" size={40} color="#888"/>
-          }
-
-        </TouchableOpacity>
-
+      <View style={styles.Titulo}>
+        <Text style={styles.Texto}>{tipoescolhido}</Text>
       </View>
 
       {advogados && <FlatList
@@ -146,6 +124,7 @@ const ListaBusca = ({route,navigation}) => {
         borderWidth: 1,
         borderColor: "#e6e6e6",
         borderTopColor:"#FFF",
+        width:'100%'
         }}
         disabledStyle={{ opacity: 0.5 }}
         pad={20}
@@ -162,9 +141,9 @@ const ListaBusca = ({route,navigation}) => {
         }}
         title={item.Nome.charAt(0)}
         />
-      <ListItem.Content>
+      <ListItem.Content >
 
-        <ListItem.Title>
+        <ListItem.Title style={styles.width}>
         <Text style={styles.nome}> {item.Nome} </Text>
         </ListItem.Title>
 
@@ -172,6 +151,8 @@ const ListaBusca = ({route,navigation}) => {
         <Text style={styles.tipo}> {item.Tipo} </Text>
         </ListItem.Subtitle>
       </ListItem.Content>
+
+      
 
       <View style={styles.centeredView}>
       <Modal
@@ -220,6 +201,23 @@ const ListaBusca = ({route,navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  width:{
+    width: 1000
+  },
+  Titulo:{
+    height: 40,
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    justifyContent: "center",
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#e6e6e6',
+  },
+  Texto:{
+    fontSize: 18,
+    fontWeight: 'bold',
+    
+  },
   modalText:{
     fontSize: 25,
     fontWeight: 'bold',
@@ -278,6 +276,7 @@ const styles = StyleSheet.create({
   },
   nome:{
     fontSize: 24,
+    width: "100%",
   },
   tipo:{
    fontSize: 18,
