@@ -103,8 +103,8 @@ export default function Login({navigation}) {
   return (
     <ScrollView style={styles.fundo}>
     <View style={styles.container}>
-     <View style={styles.logo}>
-       <Image 
+    <View style={styles.logo}>
+       <Image style={{width:150, height:199}}
        source={logo} 
        />
      </View>
@@ -164,10 +164,10 @@ const styles = StyleSheet.create({
   },
 
   logo:{
-    flex: 1,
-    paddingTop: 100,
-    justifyContent: 'center',
-    marginBottom: 20
+    marginBottom: 50,
+      flex: 1,
+      paddingTop: (dHeight-dHeight+50),
+      justifyContent: 'center',
   },
 
   container:{
@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     color:'#000000',
     fontSize: 17,
+    height: 48,
     borderRadius: 7,
     padding: 10
   },
@@ -222,6 +223,7 @@ inputsenha:{
   width: (dWidth - 100),
   marginBottom: 10,
   color:'#000000',
+  height: 48,
   fontSize: 17,
   borderTopRightRadius: 0,
   borderBottomRightRadius: 0,

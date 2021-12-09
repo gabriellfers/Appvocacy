@@ -130,7 +130,7 @@ export default function CadastroAdvogado({navigation}) {
     <ScrollView style={styles.fundo}>
     <View style={styles.container}>
      <View style={styles.logo}>
-       <Image 
+       <Image style={{width:150, height:199}}
        source={logo} 
        />
      </View>
@@ -302,10 +302,10 @@ export default function CadastroAdvogado({navigation}) {
     },
 
     logo:{
-        marginBottom: 10,
-        flex: 1,
-        paddingTop: 10,
-        justifyContent: 'center',
+      marginBottom: 50,
+      flex: 1,
+      paddingTop: (dHeight-dHeight+50),
+      justifyContent: 'center',
     },
     
     inputs:{
@@ -315,6 +315,7 @@ export default function CadastroAdvogado({navigation}) {
       color:'#000000',
       fontSize: 17,
       borderRadius: 7,
+      height: 48,
       paddingRight: 0,
       paddingLeft: 0,
       padding: 10
@@ -324,6 +325,7 @@ export default function CadastroAdvogado({navigation}) {
       backgroundColor: '#FFF',
       width: (dWidth - 100),
       marginBottom: 10,
+      height: 48,
       color:'#000000',
       fontSize: 17,
       borderTopRightRadius: 0,
@@ -337,6 +339,7 @@ export default function CadastroAdvogado({navigation}) {
     inputipo:{
       backgroundColor: '#FFF',
       width: (dWidth - 60),
+      height: 48,
       color:'#000000',
       fontSize: 17,
       borderRadius: 7,

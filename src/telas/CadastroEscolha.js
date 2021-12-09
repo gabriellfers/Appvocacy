@@ -32,7 +32,7 @@ console.log(user)
     <ScrollView style = {styles.fundo}>
       <View style={styles.container}>
       <View style={styles.logo}>
-       <Image 
+       <Image style={{width:150, height:199}}
        source={logo} 
        />
      </View>
@@ -61,9 +61,9 @@ const styles = StyleSheet.create({
     },
 
     logo:{
-      marginBottom: 10,
+      marginBottom: 100,
       flex: 1,
-      paddingTop: 100,
+      paddingTop: (dHeight-dHeight+100),
       justifyContent: 'center',
     },
 

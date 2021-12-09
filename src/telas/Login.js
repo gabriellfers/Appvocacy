@@ -75,8 +75,8 @@ export default function Login({navigation}) {
   return (
     <ScrollView style={styles.fundo}>
     <View style={styles.container}>
-     <View style={styles.logo}>
-       <Image 
+    <View style={styles.logo}>
+       <Image style={{width:150, height:199}}
        source={logo} 
        />
      </View>

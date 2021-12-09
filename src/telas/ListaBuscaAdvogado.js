@@ -7,8 +7,10 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
-  Text
+  Text,
+  Dimensions
 } from 'react-native';
+
 
 import {
   collection, 
@@ -27,11 +29,15 @@ import {
 
 import { TouchableHighlight } from "react-native";
 import { MaterialCommunityIcons, Feather} from '@expo/vector-icons';
-import results from './results';
-import { render } from 'react-dom';
+
+
 
 const ListaBusca = ({route,navigation}) => {
   //const {tipoescolhido}=route.params;
+  const dHeight = Dimensions.get('window').height
+const ddHeight = Dimensions.get('screen').height
+const dWidth = Dimensions.get('window').width
+const [selected, setSelected] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [listar, setListar] = useState();
   const [users, setUsers] = useState();
@@ -105,30 +111,13 @@ const ListaBusca = ({route,navigation}) => {
   return (
 
     <SafeAreaView style={styles.container}>
-      
-      <View style={styles.searchArea}>
-        <TextInput
-          style={styles.input}
-          placeholder= "Pesquise"
-          placeholderTextColor="#888"
-          value={searchText}
-          onChangeText={(t) => setSearchText(t)}
-        />
-
-        <TouchableOpacity style={StyleSheet.botao} onPress={()=>{
-          setClicado(!clicado)
-          handleOrderClick()
-        }
-          } style={styles.orderButton}>
-          
-          {clicado ?
-            <MaterialCommunityIcons name="order-alphabetical-ascending" size={40} color="#888"/>
-            :
-            <MaterialCommunityIcons name="order-alphabetical-descending" size={40} color="#888"/>
-          }
-
-        </TouchableOpacity>
-
+      {/* <TouchableOpacity style={styles.floatingbutton} onPress={()=>navigation.navigate("PerfilAdvogado")}>
+        <Text>
+        <Feather name="users" color="#FFFFFF" size={25} />
+        </Text>
+      </TouchableOpacity> */}
+       <View style={styles.Titulo}>
+        <Text style={styles.Texto}>Conversas Ativas</Text>
       </View>
 
       {users && <FlatList
@@ -146,7 +135,7 @@ const ListaBusca = ({route,navigation}) => {
         }}
         disabledStyle={{ opacity: 0.5 }}
         pad={20}
-        onPress={()=> nameTap(item.Imagem, item.Nome, item.id)}
+        //onPress={()=> nameTap(item.Imagem, item.Nome, item.id)}
         >
         
         <Avatar
@@ -169,16 +158,44 @@ const ListaBusca = ({route,navigation}) => {
         <Text style={styles.tipo}> {item.Tipo} </Text>
         </ListItem.Subtitle>
       </ListItem.Content>
+      <TouchableOpacity style={styles.btnEditar} onPress={() => nameTap(item.Imagem, item.Nome, item.id)}>
+        <Text style={styles.textoLogin}>Entrar</Text>
+      </TouchableOpacity>
         </ListItem>
         </View>
       }
       />}
-
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  Titulo:{
+    height: 60,
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    justifyContent: "center",
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#e6e6e6',
+  },
+  Texto:{
+    fontSize: 22,
+    fontWeight: 'bold',
+    
+  },
+  floatingbutton:{
+    position:"absolute",
+    width:60,
+    height:60,
+    right: 20,
+    top: 20,
+    zIndex: 100,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "#D49D3D"
+  },
   container: {
     flex: 1,
   },
@@ -221,6 +238,20 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
   },
+  btnEditar:{
+    backgroundColor: '#53D489',
+    height: 40,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 7,
+    marginTop: 10,
+    marginBottom: 10
+    },
+    textoLogin:{
+      color: '#FFFFFF',
+      fontSize: 17
+    },
 });
 
 export default ListaBusca;

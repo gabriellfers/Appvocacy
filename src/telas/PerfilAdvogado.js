@@ -10,8 +10,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView,
   TextInput,
   Modal,
+  Image,
   Promise,
   Dimensions
   
@@ -38,18 +40,22 @@ import {
   ListItem
 } from "react-native-elements";
 
+import {Feather} from '@expo/vector-icons';
+
 import { TouchableHighlight } from "react-native";
 
 const dHeight = Dimensions.get('window').height
+const ddHeight = Dimensions.get('screen').height
 const dWidth = Dimensions.get('window').width
 
 
 export default function Perfil({navigation}) {
   
-
+  const [selected, setSelected] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalImagemVisible, setModalImagemVisible] = useState(false);
   const [modalExcluirVisible, setModalExcluirVisible] = useState(false);
+  const [modalCreditosVisible, setModalCreditosVisible] = useState(false);
   const [modalEmailVisible, setModalEmailVisible] = useState(false);
 
   const db = getFirestore();
@@ -246,11 +252,13 @@ const AlterarImagem = ()=>{
 
   return (
     <ScrollView>
-    <View>
+     
+    {/* <TouchableOpacity style={styles.floatingbutton} onPress={()=>navigation.navigate("ListaBuscaAdvogado")}>
+        <Text>
+        <Feather name="menu" color="#FFFFFF" size={25} />
+        </Text>
+      </TouchableOpacity> */}
 
-    
-
-    <View style = {styles.profile}>
     
     <ListItem
       Component={TouchableHighlight}
@@ -282,31 +290,74 @@ const AlterarImagem = ()=>{
         </TouchableOpacity> 
     </ListItem>
 
-    <View style = {styles.container}>
+    <SafeAreaView style = {styles.container}> 
     <Card containerStyle={styles.profile} wrapperStyle={{}}>
       <Text style={styles.titulo}>Opções:</Text>
-      <View>
+      <TouchableOpacity style={styles.btn} onPress={()=>{navigation.navigate("ListaBuscaAdvogado")}}>
+      <Text style={styles.textoLogin}>Chats</Text>
+      </TouchableOpacity>  
+      <TouchableOpacity style={styles.btnExcluir} onPress={()=> setModalCreditosVisible(true)}>
+      <Text style={styles.textoLogin}>Créditos</Text>
+      </TouchableOpacity> 
+    </Card>
+
+    <Card containerStyle={styles.profile} wrapperStyle={{}}>
+      <Text style={styles.titulo}>Conta:</Text>
       <TouchableOpacity style={styles.btn} onPress={()=> setModalEmailVisible(true)}>
       <Text style={styles.textoLogin}>Trocar Email</Text>
-      </TouchableOpacity> 
+      </TouchableOpacity>  
       <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
       <Text style={styles.textoLogin}>Sair</Text>
       </TouchableOpacity>  
       <TouchableOpacity style={styles.btnExcluir} onPress={()=> setModalExcluirVisible(true)}>
       <Text style={styles.textoLogin}>EXCLUIR CONTA</Text>
       </TouchableOpacity>  
-      <TouchableOpacity style={styles.btn} onPress={()=>{navigation.navigate("ListaBuscaAdvogado")}}>
-      <Text style={styles.textoLogin}>Chats</Text>
-      </TouchableOpacity>  
-      </View>
     </Card>
+  
+
+
+
+
+    <View style={styles.centeredView}>
+      <ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        swipeDirection="left"
+        visible={modalCreditosVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalCreditosVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalViewc}>
+            <Text style={{fontSize: 26, fontWeight: 'bold'}}>Criadores{"\n"}</Text>
+            <Image style={{height:75, width:75, borderRadius:37.5}} source={{uri: 'https://media-exp1.licdn.com/dms/image/C4E03AQG_fdUKbMwsaA/profile-displayphoto-shrink_200_200/0/1638580111097?e=1644451200&v=beta&t=rgV22QOiKoX8IdwUF0T-eyGpMbvuBMMSE28Wj3qFJPY'}}/>
+            <Text style={{fontSize: 18}}>Gabriel Fernandes</Text>
+            <Text style={{fontSize: 10}}>Estudante de Desenvolvimento de Sistemas na Etec Zona Leste{"\n"}</Text>
+
+            <Image style={{height:75, width:75, borderRadius:37.5}} source={{uri: 'https://cdn.discordapp.com/attachments/818301339104837633/918328296389902406/gay.jpg'}}/>
+            <Text style={{fontSize: 18}}>Gustavo Almeida</Text>
+            <Text style={{fontSize: 10}}>Estudante de Desenvolvimento de Sistemas na Etec Zona Leste{"\n"}</Text>
+
+            <Image style={{height:75, width:75, borderRadius:37.5}} source={{uri: 'https://media-exp1.licdn.com/dms/image/D4E03AQEmjjgtAD85uQ/profile-displayphoto-shrink_200_200/0/1638541718332?e=1644451200&v=beta&t=suocdXZfPa905pP1e7esGxj5E2V4KlIDdj027zZko5o'}}/>
+            <Text style={{fontSize: 18}}>Fabio Yukio</Text>
+            <Text style={{fontSize: 10}}>Estudante de Desenvolvimento de Sistemas na Etec Zona Leste{"\n"}</Text>
+
+            <Image style={{height:75, width:75, borderRadius:37.5}} source={{uri: 'https://i.imgur.com/pGoGnmR.jpg'}}/>
+            <Text style={{fontSize: 18}}>Diego Fortes</Text>
+            <Text style={{fontSize: 10}}>Estudante de Desenvolvimento de Sistemas na Etec Zona Leste{"\n"}</Text>
+            
+
+        <TouchableOpacity style={styles.btnEditsair} onPress={() => {setModalCreditosVisible(!modalCreditosVisible)}}>
+        <Text style={styles.textoLogin}>Fechar</Text>
+        </TouchableOpacity>  
+          </View>
+        </View>
+      </Modal>
+      </ScrollView>
     </View>
-    </View>
-
-    </View>
-
-
-
 
     <View style={styles.centeredView}>
       <Modal
@@ -467,9 +518,9 @@ const AlterarImagem = ()=>{
         </View>
       </Modal>
     </View>
+    </SafeAreaView>
     
     </ScrollView>
-    
   );
 }
 
@@ -483,10 +534,22 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 10
     },
+    floatingbutton:{
+      position:"absolute",
+      width:60,
+      height:60,
+      right: 20,
+      top: -10,
+      zIndex: 100,
+      borderRadius: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: "#D49D3D"
+    },
     container:{
         flex:1,
         alignItems: 'center',
-        marginBottom: 15,
+        height: dHeight
     },
     profile:{
       fontSize: 25,
@@ -553,8 +616,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 7,
-        marginTop: 10,
-        marginBottom: 10
+        marginTop: 5,
+        marginBottom: 5
         },
       textoLogin:{
         color: '#FFFFFF',
@@ -569,9 +632,27 @@ const styles = StyleSheet.create({
       centeredView: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
       },
       modalView: {
+        position: 'absolute',
+        marginLeft: 20,
+        marginRight: 20,
+        backgroundColor: "#FFFFFF",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      modalViewc: {
+        height:(dHeight - 50),
         position: 'absolute',
         marginLeft: 20,
         marginRight: 20,

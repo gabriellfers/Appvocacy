@@ -12,6 +12,7 @@ import {
   ScrollView,
   TextInput,
   Modal,
+  Image,
   Promise,
   Dimensions
   
@@ -50,6 +51,7 @@ export default function Perfil({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalImagemVisible, setModalImagemVisible] = useState(false);
   const [modalExcluirVisible, setModalExcluirVisible] = useState(false);
+  const [modalCreditosVisible, setModalCreditosVisible] = useState(false);
   const [modalEmailVisible, setModalEmailVisible] = useState(false);
 
   const db = getFirestore();
@@ -284,17 +286,22 @@ const AlterarImagem = ()=>{
     <View style = {styles.container}>
     <Card containerStyle={styles.profile} wrapperStyle={{}}>
       <Text style={styles.titulo}>Opções:</Text>
-      <View>
+      <TouchableOpacity style={styles.btnExcluir} onPress={()=> setModalCreditosVisible(true)}>
+      <Text style={styles.textoLogin}>Créditos</Text>
+      </TouchableOpacity> 
+    </Card>
+
+    <Card containerStyle={styles.profile} wrapperStyle={{}}>
+      <Text style={styles.titulo}>Conta:</Text>
       <TouchableOpacity style={styles.btn} onPress={()=> setModalEmailVisible(true)}>
       <Text style={styles.textoLogin}>Trocar Email</Text>
-      </TouchableOpacity> 
+      </TouchableOpacity>  
       <TouchableOpacity style={styles.btnLogout} onPress={()=>{logoutFirebase()}}>
       <Text style={styles.textoLogin}>Sair</Text>
       </TouchableOpacity>  
       <TouchableOpacity style={styles.btnExcluir} onPress={()=> setModalExcluirVisible(true)}>
       <Text style={styles.textoLogin}>EXCLUIR CONTA</Text>
       </TouchableOpacity>  
-      </View>
     </Card>
     </View>
     </View>
@@ -406,6 +413,49 @@ const AlterarImagem = ()=>{
     </View>
 
     <View style={styles.centeredView}>
+      <ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        swipeDirection="left"
+        visible={modalCreditosVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalCreditosVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalViewc}>
+            <Text style={{fontSize: 26, fontWeight: 'bold'}}>Criadores{"\n"}</Text>
+            <Image style={{height:75, width:75, borderRadius:37.5}} source={{uri: 'https://media-exp1.licdn.com/dms/image/C4E03AQG_fdUKbMwsaA/profile-displayphoto-shrink_200_200/0/1638580111097?e=1644451200&v=beta&t=rgV22QOiKoX8IdwUF0T-eyGpMbvuBMMSE28Wj3qFJPY'}}/>
+            <Text style={{fontSize: 18}}>Gabriel Fernandes</Text>
+            <Text style={{fontSize: 10}}>Estudante de Desenvolvimento de Sistemas na Etec Zona Leste{"\n"}</Text>
+
+            <Image style={{height:75, width:75, borderRadius:37.5}} source={{uri: 'https://cdn.discordapp.com/attachments/818301339104837633/918328296389902406/gay.jpg'}}/>
+            <Text style={{fontSize: 18}}>Gustavo Almeida</Text>
+            <Text style={{fontSize: 10}}>Estudante de Desenvolvimento de Sistemas na Etec Zona Leste{"\n"}</Text>
+
+            <Image style={{height:75, width:75, borderRadius:37.5}} source={{uri: 'https://media-exp1.licdn.com/dms/image/D4E03AQEmjjgtAD85uQ/profile-displayphoto-shrink_200_200/0/1638541718332?e=1644451200&v=beta&t=suocdXZfPa905pP1e7esGxj5E2V4KlIDdj027zZko5o'}}/>
+            <Text style={{fontSize: 18}}>Fabio Yukio</Text>
+            <Text style={{fontSize: 10}}>Estudante de Desenvolvimento de Sistemas na Etec Zona Leste{"\n"}</Text>
+
+            <Image style={{height:75, width:75, borderRadius:37.5}} source={{uri: 'https://i.imgur.com/pGoGnmR.jpg'}}/>
+            <Text style={{fontSize: 18}}>Diego Fortes</Text>
+            <Text style={{fontSize: 10}}>Estudante de Desenvolvimento de Sistemas na Etec Zona Leste{"\n"}</Text>
+            
+
+        <TouchableOpacity style={styles.btnEditsair} onPress={() => {setModalCreditosVisible(!modalCreditosVisible)}}>
+        <Text style={styles.textoLogin}>Fechar</Text>
+        </TouchableOpacity>  
+          </View>
+        </View>
+      </Modal>
+      </ScrollView>
+    </View>
+
+
+
+    <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -499,7 +549,7 @@ const styles = StyleSheet.create({
     },
     btn:{
       backgroundColor: '#DBBA81',
-      width: (dWidth - 100),
+      width: (dWidth - 50),
       height: 40,
       alignItems: 'center',
       justifyContent: 'center',
@@ -508,7 +558,7 @@ const styles = StyleSheet.create({
       },
     btnLogout:{
       backgroundColor: '#A1772F',
-      width: (dWidth - 100),
+      width: (dWidth - 50),
       height: 40,
       alignItems: 'center',
       justifyContent: 'center',
@@ -517,7 +567,7 @@ const styles = StyleSheet.create({
       },
       btnExcluir:{
         backgroundColor: '#544732',
-        width: (dWidth - 100),
+        width: (dWidth - 50),
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
@@ -550,8 +600,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 7,
-        marginTop: 10,
-        marginBottom: 10
+        marginTop: 5,
+        marginBottom: 5
         },
       textoLogin:{
         color: '#FFFFFF',
@@ -570,8 +620,24 @@ const styles = StyleSheet.create({
       },
       modalView: {
         position: 'absolute',
-        marginLeft: 20,
-        marginRight: 20,
+        margin: 20,
+        backgroundColor: "#FFFFFF",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      modalViewc: {
+        height: (dHeight - 50),
+        position: 'absolute',
+        margin: 20,
         backgroundColor: "#FFFFFF",
         borderRadius: 20,
         padding: 35,

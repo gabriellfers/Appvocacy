@@ -128,7 +128,6 @@ const ListaBusca = ({route,navigation}) => {
         }}
         disabledStyle={{ opacity: 0.5 }}
         pad={20}
-        onPress={() => nameTap(item.Imagem, item.Nome, item.id)}
         >
         
         <Avatar
@@ -151,40 +150,9 @@ const ListaBusca = ({route,navigation}) => {
         <Text style={styles.tipo}> {item.Tipo} </Text>
         </ListItem.Subtitle>
       </ListItem.Content>
-
-      
-
-      <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Iniciar chat com {item.Nome}?</Text>
-
-        <TouchableOpacity style={styles.btnEditConfirm}>
-        <Text style={styles.textoLogin} onPress={()=> {
-          setModalVisible(!modalVisible)
-          nameTap(item.Imagem, item.Nome, item.id
-          )}}>Sim</Text>
-        </TouchableOpacity> 
-
-        <TouchableOpacity style={styles.btnEditsair}>
-        <Text style={styles.textoLogin} onPress={
-          () => {
-            setModalVisible(!modalVisible)
-          }}>Não</Text>
-        </TouchableOpacity>   
-          </View>
-        </View>
-      </Modal>
-</View>
+      <TouchableOpacity style={styles.btnEditar} onPress={() => nameTap(item.Imagem, item.Nome, item.id)}>
+        <Text style={styles.textoLogin}>Entrar</Text>
+      </TouchableOpacity>
         </ListItem>
         </View>
       }
@@ -205,7 +173,7 @@ const styles = StyleSheet.create({
     width: 1000
   },
   Titulo:{
-    height: 40,
+    height: 60,
     alignItems: 'center',
     backgroundColor: '#FFF',
     justifyContent: "center",
@@ -214,7 +182,7 @@ const styles = StyleSheet.create({
     borderColor: '#e6e6e6',
   },
   Texto:{
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
     
   },
@@ -314,6 +282,20 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
   },
+  btnEditar:{
+    backgroundColor: '#53D489',
+    height: 40,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 7,
+    marginTop: 10,
+    marginBottom: 10
+    },
+    textoLogin:{
+      color: '#FFFFFF',
+      fontSize: 17
+    },
 });
 
 export default ListaBusca;

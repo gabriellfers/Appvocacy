@@ -81,7 +81,7 @@ export default function App({  }){
         <Stack.Screen 
         name="PerfilAdvogado"
         component={PerfilAdvogado}
-        options={{headerTitle: (props) => <LogoGold  {...props}/>, headerShown: true}}
+        options={{headerTitle: (props) => <LogoGold  {...props}/>, headerLeft: false, headerShown: true}}
         />
         <Stack.Screen 
         name="Home"

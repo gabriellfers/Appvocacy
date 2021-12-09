@@ -108,7 +108,7 @@ export default function CadastroCliente({navigation}) {
     <ScrollView style={styles.fundo}>
     <View style={styles.container}>
      <View style={styles.logo}>
-       <Image 
+       <Image style={{width:150, height:199}}
        source={logo} 
        />
      </View>
@@ -208,10 +208,10 @@ export default function CadastroCliente({navigation}) {
     },
 
     logo:{
-        marginBottom: 10,
-        flex: 1,
-        paddingTop: 10,
-        justifyContent: 'center',
+      marginBottom: 50,
+      flex: 1,
+      paddingTop: (dHeight-dHeight+50),
+      justifyContent: 'center',
     },
     
     inputs:{
@@ -220,6 +220,7 @@ export default function CadastroCliente({navigation}) {
         marginBottom: 10,
         color:'#000000',
         fontSize: 17,
+        height: 48,
         borderRadius: 7,
         paddingRight: 0,
         paddingLeft: 0,
@@ -231,6 +232,7 @@ export default function CadastroCliente({navigation}) {
         width: (dWidth - 100),
         marginBottom: 10,
         color:'#000000',
+        height: 48,
         fontSize: 17,
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
