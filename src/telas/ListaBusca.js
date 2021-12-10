@@ -18,8 +18,15 @@ import {
   getDocs,
   getFirestore,
   orderBy, 
-  limit
+  limit,
+  updateDoc,
+  arrayUnion,
+  doc
 } from "firebase/firestore";
+
+import {
+  getAuth, 
+} from "firebase/auth";
 
 import { 
   Avatar,
@@ -42,6 +49,19 @@ const ListaBusca = ({route,navigation}) => {
     Nome: "",
     Imagem: "",
   })
+
+  const addConversa = (Id) =>{
+    const auth = getAuth()
+    const db = getFirestore();
+    const userRef = doc(db, 'info-user', auth.currentUser.uid)
+    const advogadoRef = doc(db, 'info-advogado', Id)
+    updateDoc(userRef,{
+     Conversas: arrayUnion(Id)
+    })
+    updateDoc(advogadoRef,{
+      Conversas: arrayUnion(auth.currentUser.uid)
+     })
+  }
 
   useEffect(async()=> {
     const db = getFirestore();
@@ -150,7 +170,10 @@ const ListaBusca = ({route,navigation}) => {
         <Text style={styles.tipo}> {item.Tipo} </Text>
         </ListItem.Subtitle>
       </ListItem.Content>
-      <TouchableOpacity style={styles.btnEditar} onPress={() => nameTap(item.Imagem, item.Nome, item.id)}>
+      <TouchableOpacity style={styles.btnEditar} onPress={() => {
+        nameTap(item.Imagem, item.Nome, item.id)
+        addConversa(item.id)
+        }}>
         <Text style={styles.textoLogin}>Entrar</Text>
       </TouchableOpacity>
         </ListItem>

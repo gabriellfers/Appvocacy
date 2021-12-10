@@ -82,7 +82,8 @@ export default function CadastroAdvogado({navigation}) {
                 OAB: vOAB,
                 Nome: vNome,
                 Telefone: vTelefone,
-                Tipo: value
+                Tipo: value,
+                Conversas: []
               });
 
               console.log("Criado com sucesso! UID: " + user.uid)

@@ -29,6 +29,7 @@ import {
 
 import { TouchableHighlight } from "react-native";
 import { MaterialCommunityIcons, Feather} from '@expo/vector-icons';
+import { getAuth } from 'firebase/auth';
 
 
 
@@ -48,9 +49,10 @@ const [selected, setSelected] = useState(0);
     Imagem: "",
   })
 
-  useEffect(async()=> {
+  const LoadConversas = () => {
+    const auth = getAuth(); 
     const db = getFirestore();
-    var vquery = query(collection(db,'info-user'), where('Nome','==', '3DS'))
+    var vquery = query(collection(db,'info-user'), where('Conversas','array-contains', auth.currentUser.uid))
     var data = []
     getDocs(vquery).then(resultados=>{
       resultados.forEach(doc=>{
@@ -60,7 +62,7 @@ const [selected, setSelected] = useState(0);
       })
       setUsers(data)
     })
-  },[])
+  }
 
 
   const handleOrderClick = () => {
@@ -108,6 +110,8 @@ const [selected, setSelected] = useState(0);
       })
     }
   }
+
+  LoadConversas()
   return (
 
     <SafeAreaView style={styles.container}>

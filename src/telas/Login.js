@@ -51,7 +51,7 @@ export default function Login({navigation}) {
     signInWithEmailAndPassword(auth, email, senha)
       .then((userCredential) => {
         const user = userCredential.user;
-        alert("Logado")
+        //alert("Logado")
       })
       .catch((error) => {
         const errorCode = error.code;

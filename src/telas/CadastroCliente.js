@@ -63,7 +63,8 @@ export default function CadastroCliente({navigation}) {
                   CPF: vCPF,
                   DataNascimnto: vDataNascimento,
                   Nome: vNome,
-                  Telefone: vTelefone
+                  Telefone: vTelefone,
+                  Conversas: []
                 });
 
                 console.log("Criado com sucesso! UID: " + user.uid)

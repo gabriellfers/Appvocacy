@@ -21,6 +21,8 @@ import {
   limit
 } from "firebase/firestore";
 
+import { getAuth } from 'firebase/auth';
+
 import { 
   Avatar,
   ListItem
@@ -42,9 +44,17 @@ const ListaBusca = ({navigation}) => {
     Imagem: "",
   })
 
-  useEffect(async()=> {
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     LoadConversas()
+  //   }, 1000);
+  // }, []);
+
+  const LoadConversas = () => {
     const db = getFirestore();
-    var vquery = query(collection(db,'info-advogado'))
+    const auth = getAuth();
+    var vquery = query(collection(db,'info-advogado'), where('Conversas','array-contains', auth.currentUser.uid))
     var data = []
     getDocs(vquery).then(resultados=>{
       resultados.forEach(doc=>{
@@ -54,7 +64,7 @@ const ListaBusca = ({navigation}) => {
       })
       setAdvogados(data)
     })
-  },[])
+  }
 
 
   const handleOrderClick = () => {
@@ -103,6 +113,8 @@ const ListaBusca = ({navigation}) => {
       })
     }
   }
+
+  LoadConversas()
   return (
 
     <SafeAreaView style={styles.container}>
