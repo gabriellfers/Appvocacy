@@ -49,11 +49,11 @@ const Chats = ({route,navigation}) => {
   })
 
   
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     receberMsg()
-  //   }, 1000);
-  // }, []);
+   useEffect(() => {
+     setTimeout(() => {
+       receberMsg()
+     }, 1000);
+   }, []);
     
 
   const receberMsg = () => {
@@ -94,7 +94,6 @@ const Chats = ({route,navigation}) => {
     
 
   };
-receberMsg()
 
   return (
     <NativeBaseProvider>

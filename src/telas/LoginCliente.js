@@ -116,7 +116,7 @@ export default function Login({navigation}) {
       <TextInput 
         style={styles.inputEmail}
         autoCorrect = {false}
-        placeholder = "Email ou CPF"
+        placeholder = "Email"
         onChangeText={ email => setEmail(email) }  
       />
 
