@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import Home from './src/telas/Main';
 import Perfil from './src/telas/Perfil';
 import PerfilAdvogado from './src/telas/PerfilAdvogado';
@@ -68,10 +67,6 @@ export default function Routes(){
       />
 
     </Tab.Navigator>
-
-
-
-      
     );
 }
 
